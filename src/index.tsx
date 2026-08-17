@@ -10,6 +10,29 @@ const store = createStore();
 
 /**
  * Props injected into the component passed to {@link toi}.
+ *
+ * @example
+ * ```tsx
+ * const Confirm: FC<ToiProps<boolean>> = ({ ref, resolve }) => (
+ *   <dialog ref={ref} open>
+ *     <button onClick={() => resolve(true)}>OK</button>
+ *     <button onClick={() => resolve(false)}>Cancel</button>
+ *   </dialog>
+ * );
+ * ```
+ *
+ * @example
+ * Extending a native element's props:
+ * ```tsx
+ * type ConfirmProps = ComponentProps<'dialog'> & ToiProps<boolean>;
+ *
+ * const Confirm: FC<ConfirmProps> = ({ ref, resolve, ...props }) => (
+ *   <dialog {...props} ref={ref} open>
+ *     <button onClick={() => resolve(true)}>OK</button>
+ *     <button onClick={() => resolve(false)}>Cancel</button>
+ *   </dialog>
+ * );
+ * ```
  */
 export type ToiProps<Response> = {
   /**
@@ -34,6 +57,29 @@ export type ToiProps<Response> = {
  *
  * @param Component - Component to render, receiving {@link ToiProps}.
  * @returns A promise resolving with the response passed to `resolve`.
+ *
+ * @example
+ * ```tsx
+ * const confirmed = await toi<boolean>(({ ref, resolve }) => (
+ *   <dialog ref={ref} open>
+ *     <button onClick={() => resolve(true)}>OK</button>
+ *     <button onClick={() => resolve(false)}>Cancel</button>
+ *   </dialog>
+ * ));
+ * ```
+ *
+ * @example
+ * Passing a predefined component:
+ * ```tsx
+ * const Confirm: FC<ToiProps<boolean>> = ({ ref, resolve }) => (
+ *   <dialog ref={ref} open>
+ *     <button onClick={() => resolve(true)}>OK</button>
+ *     <button onClick={() => resolve(false)}>Cancel</button>
+ *   </dialog>
+ * );
+ *
+ * const confirmed = await toi(Confirm);
+ * ```
  */
 export const toi = <Response,>(Component: FC<ToiProps<Response>>) => {
   return new Promise((resolvePromise) => {
@@ -72,6 +118,32 @@ export const toi = <Response,>(Component: FC<ToiProps<Response>>) => {
  *
  * @param Component - Component to render, receiving {@link ToiProps}.
  * @returns A function that invokes {@link toi} with `Component`.
+ *
+ * @example
+ * ```tsx
+ * const confirm = toi.fn<boolean>(({ ref, resolve }) => (
+ *   <dialog ref={ref} open>
+ *     <button onClick={() => resolve(true)}>OK</button>
+ *     <button onClick={() => resolve(false)}>Cancel</button>
+ *   </dialog>
+ * ));
+ *
+ * const confirmed = await confirm();
+ * ```
+ *
+ * @example
+ * Passing a predefined component:
+ * ```tsx
+ * const Confirm: FC<ToiProps<boolean>> = ({ ref, resolve }) => (
+ *   <dialog ref={ref} open>
+ *     <button onClick={() => resolve(true)}>OK</button>
+ *     <button onClick={() => resolve(false)}>Cancel</button>
+ *   </dialog>
+ * );
+ *
+ * const confirm = toi.fn(Confirm);
+ * const confirmed = await confirm();
+ * ```
  */
 toi.fn = <Response,>(Component: FC<ToiProps<Response>>) => {
   return () => toi(Component);
@@ -81,6 +153,16 @@ toi.fn = <Response,>(Component: FC<ToiProps<Response>>) => {
  * Renders all components currently requested via {@link toi}.
  *
  * Must be mounted once for {@link toi} to have anywhere to render its components.
+ *
+ * @example
+ * ```tsx
+ * const App = () => (
+ *   <>
+ *     <YourApp />
+ *     <ToiHost />
+ *   </>
+ * );
+ * ```
  */
 export const ToiHost: FC = () => {
   const requests = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getSnapshot);
