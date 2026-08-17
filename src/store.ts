@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
  * A single pending render request tracked by the store.
  */
 type ToiRequest = {
-  id: number;
+  id: string;
   render: () => ReactNode;
 };
 
@@ -15,7 +15,6 @@ type ToiRequest = {
  */
 export const createStore = () => {
   let requests: ToiRequest[] = [];
-  let nextId = 0;
   const listeners = new Set<() => void>();
 
   /** Notifies all subscribers that the snapshot has changed. */
@@ -42,17 +41,18 @@ export const createStore = () => {
    *
    * @param render - Called with the request's id to produce the node to render.
    */
-  const add = (render: (id: number) => ReactNode) => {
-    const id = nextId++;
+  const add = (render: (id: string) => ReactNode): void => {
+    const id = crypto.randomUUID();
 
-    requests = [...requests, { id, render: () => render(id) }];
+    requests = [...requests, {
+      id,
+      render: () => render(id),
+    }];
     emitChange();
-
-    return id;
   };
 
   /** Removes the request with the given id, if present. */
-  const remove = (id: number) => {
+  const remove = (id: string): void => {
     requests = requests.filter((request) => request.id !== id);
     emitChange();
   };
