@@ -8,11 +8,33 @@ import type { FC, RefCallback } from 'react';
 
 const store = createStore();
 
+/**
+ * Props injected into the component passed to {@link toi}.
+ */
 export type ToiProps<Response> = {
+  /**
+   * Ref to attach to the animatable root element of the component, used to
+   * detect when its exit animations have finished before resolving.
+   */
   ref?: RefCallback<Animatable> | undefined;
+  /**
+   * Resolves the promise returned by {@link toi} with the given response.
+   * Calling this multiple times has no effect after the first call.
+   */
   resolve: (response: Response) => void;
 };
 
+/**
+ * Mounts `Component` into the {@link ToiHost} and returns a promise
+ * that resolves with the value passed to `resolve`.
+ *
+ * Once `resolve` is called, the component is kept mounted until any running
+ * animations (excluding infinite ones) on its ref'd element finish, then it
+ * is removed from the host and the promise resolves.
+ *
+ * @param Component - Component to render, receiving {@link ToiProps}.
+ * @returns A promise resolving with the response passed to `resolve`.
+ */
 export const toi = <Response,>(Component: FC<ToiProps<Response>>) => {
   return new Promise((resolvePromise) => {
     store.add((id) => {
@@ -44,6 +66,11 @@ export const toi = <Response,>(Component: FC<ToiProps<Response>>) => {
   });
 };
 
+/**
+ * Renders all components currently requested via {@link toi}.
+ *
+ * Must be mounted once for {@link toi} to have anywhere to render its components.
+ */
 export const ToiHost: FC = () => {
   const requests = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getSnapshot);
 
