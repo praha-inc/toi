@@ -67,6 +67,17 @@ export const toi = <Response,>(Component: FC<ToiProps<Response>>) => {
 };
 
 /**
+ * Binds `Component` to {@link toi}, returning a reusable function that
+ * mounts it and resolves with its response each time it's called.
+ *
+ * @param Component - Component to render, receiving {@link ToiProps}.
+ * @returns A function that invokes {@link toi} with `Component`.
+ */
+toi.fn = <Response,>(Component: FC<ToiProps<Response>>) => {
+  return () => toi(Component);
+};
+
+/**
  * Renders all components currently requested via {@link toi}.
  *
  * Must be mounted once for {@link toi} to have anywhere to render its components.
