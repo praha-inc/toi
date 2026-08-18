@@ -81,7 +81,7 @@ export type ToiProps<Response> = {
  * const confirmed = await toi(Confirm);
  * ```
  */
-export const toi = <Response,>(Component: FC<ToiProps<Response>>) => {
+export const toi = <Response,>(Component: FC<ToiProps<Response>>): Promise<Response> => {
   return new Promise((resolvePromise) => {
     store.add((id) => {
       const ref = createRef<Animatable>();
@@ -145,7 +145,7 @@ export const toi = <Response,>(Component: FC<ToiProps<Response>>) => {
  * const confirmed = await confirm();
  * ```
  */
-toi.fn = <Response,>(Component: FC<ToiProps<Response>>) => {
+toi.fn = <Response,>(Component: FC<ToiProps<Response>>): () => Promise<Response> => {
   return () => toi(Component);
 };
 
