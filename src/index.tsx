@@ -168,12 +168,12 @@ export const ToiHost: FC = () => {
   const requests = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getSnapshot);
 
   return (
-    <>
+    <section aria-live="polite" aria-label="notifications">
       {requests.map((request) => (
         <Fragment key={request.id}>
           {request.render()}
         </Fragment>
       ))}
-    </>
+    </section>
   );
 };

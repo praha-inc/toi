@@ -146,7 +146,9 @@ describe('ToiHost', () => {
 
   describe('when there are no pending requests', () => {
     it('should render nothing', () => {
-      expect(screen.queryByRole('button')).toBeNull();
+      const host = screen.getByRole('region', { name: 'notifications' });
+
+      expect(host.children).toHaveLength(0);
     });
   });
 
@@ -156,26 +158,27 @@ describe('ToiHost', () => {
     );
 
     it('should render all of them and resolve them independently', async () => {
+      const host = screen.getByRole('region', { name: 'notifications' });
       const [promiseA, promiseB] = await act(() => [
         toi<string>((props) => <Component {...props} label="a" />),
         toi<string>((props) => <Component {...props} label="b" />),
       ]);
 
-      expect(screen.getAllByRole('button')).toHaveLength(2);
+      expect(host.children).toHaveLength(2);
 
       const responseA = await act(async () => {
         fireEvent.click(screen.getByRole('button', { name: 'a' }));
         return promiseA;
       });
       expect(responseA).toBe('a');
-      expect(screen.queryAllByRole('button')).toHaveLength(1);
+      expect(host.children).toHaveLength(1);
 
       const responseB = await act(async () => {
         fireEvent.click(screen.getByRole('button', { name: 'b' }));
         return promiseB;
       });
       expect(responseB).toBe('b');
-      expect(screen.queryAllByRole('button')).toHaveLength(0);
+      expect(host.children).toHaveLength(0);
     });
   });
 });
