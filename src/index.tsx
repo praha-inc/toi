@@ -8,6 +8,8 @@ import type { FC, RefCallback } from 'react';
 
 const store = createStore();
 
+export type ToiResolve<Response> = (response: Response) => void;
+
 /**
  * Props injected into the component passed to {@link toi}.
  *
@@ -44,7 +46,7 @@ export type ToiProps<Response> = {
    * Resolves the promise returned by {@link toi} with the given response.
    * Calling this multiple times has no effect after the first call.
    */
-  resolve: (response: Response) => void;
+  resolve: ToiResolve<Response>;
 };
 
 /**
