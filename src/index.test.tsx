@@ -117,6 +117,23 @@ describe('toi', () => {
     });
   });
 
+  describe('when additional props are passed', () => {
+    const Component: FC<ToiProps<boolean> & { label: string }> = ({ ref, resolve, label }) => (
+      <button type="button" ref={ref} onClick={() => resolve(true)}>{label}</button>
+    );
+
+    it('should pass them through to the rendered component', async () => {
+      const [promise] = await act(() => [toi(Component, { label: 'custom label' })]);
+
+      expect(screen.queryByRole('button', { name: 'custom label' })).not.toBeNull();
+
+      await act(async () => {
+        fireEvent.click(screen.getByRole('button', { name: 'custom label' }));
+        return promise;
+      });
+    });
+  });
+
   describe('toi.fn', () => {
     describe('when the bound function is called', () => {
       const Component: FC<ToiProps<number>> = ({ ref, resolve }) => (
@@ -133,6 +150,35 @@ describe('toi', () => {
         });
 
         expect(response).toBe(42);
+      });
+    });
+
+    describe('when default props are given', () => {
+      const Component: FC<ToiProps<boolean> & { label: string }> = ({ ref, resolve, label }) => (
+        <button type="button" ref={ref} onClick={() => resolve(true)}>{label}</button>
+      );
+      const confirm = toi.fn(Component, { label: 'default label' });
+
+      it('should use it when the bound function is called without an override', async () => {
+        const [promise] = await act(() => [confirm()]);
+
+        expect(screen.queryByRole('button', { name: 'default label' })).not.toBeNull();
+
+        await act(async () => {
+          fireEvent.click(screen.getByRole('button', { name: 'default label' }));
+          return promise;
+        });
+      });
+
+      it('should be overridden when the bound function is called with its own props argument', async () => {
+        const [promise] = await act(() => [confirm({ label: 'override label' })]);
+
+        expect(screen.queryByRole('button', { name: 'override label' })).not.toBeNull();
+
+        await act(async () => {
+          fireEvent.click(screen.getByRole('button', { name: 'override label' }));
+          return promise;
+        });
       });
     });
   });
