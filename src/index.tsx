@@ -26,7 +26,29 @@ export type InferToiResponse<T> = T extends FC<infer Props>
 /**
  * Props injected into the component passed to {@link toi}.
  *
+ * `Response` defaults to `void`, for components that don't resolve with a value.
+ *
  * @example
+ * Resolving without a value:
+ * ```tsx
+ * const Confirm: FC<ToiProps> = ({ ref, resolve }) => (
+ *   <dialog ref={ref} open>
+ *     <button onClick={() => resolve()}>OK</button>
+ *   </dialog>
+ * );
+ * ```
+ *
+ * @example
+ * ```tsx
+ * const Confirm: FC<ToiProps> = ({ ref, resolve }) => (
+ *   <dialog ref={ref} open>
+ *     <button onClick={() => resolve()}>OK</button>
+ *   </dialog>
+ * );
+ * ```
+ *
+ * @example
+ * Resolving with a value:
  * ```tsx
  * const Confirm: FC<ToiProps<boolean>> = ({ ref, resolve }) => (
  *   <dialog ref={ref} open>
@@ -37,7 +59,7 @@ export type InferToiResponse<T> = T extends FC<infer Props>
  * ```
  *
  * @example
- * Extending a native element's props:
+ * Extending a native element's props, resolving with a value:
  * ```tsx
  * type ConfirmProps = ComponentProps<'dialog'> & ToiProps<boolean>;
  *
@@ -49,7 +71,7 @@ export type InferToiResponse<T> = T extends FC<infer Props>
  * );
  * ```
  */
-export type ToiProps<Response> = {
+export type ToiProps<Response = void> = {
   /**
    * Ref to attach to the animatable root element of the component, used to
    * detect when its exit animations have finished before resolving.
@@ -112,7 +134,19 @@ const mount = (Component: FC<Record<string, unknown>>, props?: Record<string, un
  * @returns A promise resolving with the response passed to `resolve`.
  *
  * @example
- * Passing a predefined component:
+ * Passing a predefined component that resolves without a value:
+ * ```tsx
+ * const Confirm: FC<ToiProps> = ({ ref, resolve }) => (
+ *   <dialog ref={ref} open>
+ *     <button onClick={() => resolve()}>OK</button>
+ *   </dialog>
+ * );
+ *
+ * await toi(Confirm);
+ * ```
+ *
+ * @example
+ * Passing a predefined component that resolves with a value:
  * ```tsx
  * const Confirm: FC<ToiProps<boolean>> = ({ ref, resolve }) => (
  *   <dialog ref={ref} open>
@@ -146,6 +180,17 @@ export function toi<Component extends FC<never>>(
  * @returns A promise resolving with the response passed to `resolve`.
  *
  * @example
+ * Resolving without a value:
+ * ```tsx
+ * await toi(({ ref, resolve }) => (
+ *   <dialog ref={ref} open>
+ *     <button onClick={() => resolve()}>OK</button>
+ *   </dialog>
+ * ));
+ * ```
+ *
+ * @example
+ * Resolving with a value:
  * ```tsx
  * const confirmed = await toi<boolean>(({ ref, resolve }) => (
  *   <dialog ref={ref} open>
@@ -156,6 +201,20 @@ export function toi<Component extends FC<never>>(
  * ```
  *
  * @example
+ * With additional props, resolving without a value:
+ * ```tsx
+ * type ConfirmProps = ToiProps & { message: string };
+ *
+ * await toi<void, ConfirmProps>(({ ref, resolve, message }) => (
+ *   <dialog ref={ref} open>
+ *     <p>{message}</p>
+ *     <button onClick={() => resolve()}>OK</button>
+ *   </dialog>
+ * ), { message: 'Saved!' });
+ * ```
+ *
+ * @example
+ * With additional props, resolving with a value:
  * ```tsx
  * type ConfirmProps = ToiProps<boolean> & { message: string };
  *
@@ -168,7 +227,7 @@ export function toi<Component extends FC<never>>(
  * ), { message: 'Are you sure?' });
  * ```
  */
-export function toi<Response, Props extends Record<string, unknown> = ToiProps<Response>>(
+export function toi<Response = void, Props extends Record<string, unknown> = ToiProps<Response>>(
   Component: FC<Props> & AssertExtends<Props, ToiProps<Response>>,
   ...[props]: PropsArgs<Omit<Props, keyof ToiProps<never>>>
 ): Promise<Response>;
@@ -191,7 +250,20 @@ export namespace toi {
    * additional props `Component` requires.
    *
    * @example
-   * Passing a predefined component:
+   * Passing a predefined component that resolves without a value:
+   * ```tsx
+   * const Confirm: FC<ToiProps> = ({ ref, resolve }) => (
+   *   <dialog ref={ref} open>
+   *     <button onClick={() => resolve()}>OK</button>
+   *   </dialog>
+   * );
+   *
+   * const confirm = toi.fn(Confirm);
+   * await confirm();
+   * ```
+   *
+   * @example
+   * Passing a predefined component that resolves with a value:
    * ```tsx
    * const Confirm: FC<ToiProps<boolean>> = ({ ref, resolve }) => (
    *   <dialog ref={ref} open>
@@ -221,6 +293,22 @@ export namespace toi {
    * overriding `defaultProps`.
    *
    * @example
+   * Resolving without a value:
+   * ```tsx
+   * const Confirm: FC<ToiProps & { message: string }> = ({ ref, resolve, message }) => (
+   *   <dialog ref={ref} open>
+   *     <p>{message}</p>
+   *     <button onClick={() => resolve()}>OK</button>
+   *   </dialog>
+   * );
+   *
+   * const confirm = toi.fn(Confirm, { message: 'Saved!' });
+   * await confirm();
+   * await confirm({ message: 'Deleted!' });
+   * ```
+   *
+   * @example
+   * Resolving with a value:
    * ```tsx
    * const Confirm: FC<ToiProps<boolean> & { message: string }> = ({ ref, resolve, message }) => (
    *   <dialog ref={ref} open>
@@ -251,6 +339,19 @@ export namespace toi {
    * @returns A function that invokes {@link toi} with `Component`.
    *
    * @example
+   * Resolving without a value:
+   * ```tsx
+   * const confirm = toi.fn(({ ref, resolve }) => (
+   *   <dialog ref={ref} open>
+   *     <button onClick={() => resolve()}>OK</button>
+   *   </dialog>
+   * ));
+   *
+   * await confirm();
+   * ```
+   *
+   * @example
+   * Resolving with a value:
    * ```tsx
    * const confirm = toi.fn<boolean>(({ ref, resolve }) => (
    *   <dialog ref={ref} open>
@@ -262,7 +363,7 @@ export namespace toi {
    * const confirmed = await confirm();
    * ```
    */
-  export function fn<Response, Props extends Record<string, unknown> = ToiProps<Response>>(
+  export function fn<Response = void, Props extends Record<string, unknown> = ToiProps<Response>>(
     Component: FC<Props> & AssertExtends<Props, ToiProps<Response>>,
   ): (...[props]: PropsArgs<Omit<Props, keyof ToiProps<never>>>) => Promise<Response>;
   /**
@@ -281,6 +382,23 @@ export namespace toi {
    * overriding `defaultProps`.
    *
    * @example
+   * Resolving without a value:
+   * ```tsx
+   * type ConfirmProps = ToiProps & { message: string };
+   *
+   * const confirm = toi.fn<void, ConfirmProps>((props) => (
+   *   <dialog ref={props.ref} open>
+   *     <p>{props.message}</p>
+   *     <button onClick={() => props.resolve()}>OK</button>
+   *   </dialog>
+   * ), { message: 'Saved!' });
+   *
+   * await confirm();
+   * await confirm({ message: 'Deleted!' });
+   * ```
+   *
+   * @example
+   * Resolving with a value:
    * ```tsx
    * type ConfirmProps = ToiProps<boolean> & { message: string };
    *
@@ -296,7 +414,7 @@ export namespace toi {
    * const confirmedWithOverride = await confirm({ message: 'Really?' });
    * ```
    */
-  export function fn<Response, Props extends Record<string, unknown> = ToiProps<Response>>(
+  export function fn<Response = void, Props extends Record<string, unknown> = ToiProps<Response>>(
     Component: FC<Props> & AssertExtends<Props, ToiProps<Response>>,
     defaultProps: Omit<Props, keyof ToiProps<never>>,
   ): (props?: Omit<Props, keyof ToiProps<never>>) => Promise<Response>;

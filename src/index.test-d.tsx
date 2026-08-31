@@ -58,6 +58,19 @@ describe('toi', () => {
     });
   });
 
+  describe('when calling toi with a component whose resolve takes no argument', () => {
+    test('should default the response type to void and allow calling resolve without an argument', () => {
+      type TestProps = ToiProps;
+      const Test: FC<TestProps> = ({ resolve }) => {
+        resolve();
+        return null;
+      };
+
+      const result = toi(Test);
+      expectTypeOf(result).resolves.toEqualTypeOf<void>();
+    });
+  });
+
   describe('when calling toi with explicit generics for an inline component', () => {
     test('should infer the response type from the first generic', () => {
       type TestProps = ToiProps<boolean>;
@@ -107,6 +120,14 @@ describe('toi', () => {
 
       // @ts-expect-error -- TestProps' `resolve` expects `string`, but `Response` is declared as `boolean`
       void toi<boolean, TestProps>((props) => <Test {...props} />, { additionalProp: 'test' });
+    });
+
+    test('should default the response type to void and allow calling resolve without an argument', () => {
+      const result = toi((props: ToiProps) => {
+        props.resolve();
+        return null;
+      });
+      expectTypeOf(result).resolves.toEqualTypeOf<void>();
     });
   });
 
@@ -184,6 +205,20 @@ describe('toi', () => {
           const result = fn({ additionalProp: 'override' });
           expectTypeOf(result).resolves.toEqualTypeOf<boolean>();
         });
+      });
+    });
+
+    describe('when calling toi.fn with a component whose resolve takes no argument', () => {
+      test('should default the response type to void and allow calling resolve without an argument', () => {
+        type TestProps = ToiProps;
+        const Test: FC<TestProps> = ({ resolve }) => {
+          resolve();
+          return null;
+        };
+        const fn = toi.fn(Test);
+
+        const result = fn();
+        expectTypeOf(result).resolves.toEqualTypeOf<void>();
       });
     });
 
@@ -270,6 +305,16 @@ describe('toi', () => {
 
         // @ts-expect-error -- TestProps' `resolve` expects `string`, but `Response` is declared as `boolean`
         void toi.fn<boolean, TestProps>((props) => <Test {...props} />, { additionalProp: 'test' });
+      });
+
+      test('should default the response type to void and allow calling resolve without an argument', () => {
+        const fn = toi.fn((props: ToiProps) => {
+          props.resolve();
+          return null;
+        });
+
+        const result = fn();
+        expectTypeOf(result).resolves.toEqualTypeOf<void>();
       });
     });
   });
