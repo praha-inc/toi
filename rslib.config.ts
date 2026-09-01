@@ -1,3 +1,4 @@
+import { pluginReact } from '@rsbuild/plugin-react';
 import { defineConfig } from '@rslib/core';
 
 import type { Format, LibConfig } from '@rslib/core';
@@ -33,5 +34,8 @@ export default defineConfig({
   lib: [
     createLibrary('cjs'),
     createLibrary('esm'),
+  ],
+  plugins: [
+    pluginReact(),
   ],
 });
