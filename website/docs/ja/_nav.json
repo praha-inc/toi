@@ -1,0 +1,4 @@
+[
+  { "text": "ガイド", "link": "/guide/", "activeMatch": "/guide/" },
+  { "text": "API", "link": "/api/", "activeMatch": "/api/" }
+]

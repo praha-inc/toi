@@ -1,0 +1,6 @@
+[
+  { "type": "file", "name": "mounting", "label": "ホストのマウント" },
+  { "type": "file", "name": "resolving", "label": "解決する" },
+  { "type": "file", "name": "reusable-functions", "label": "再利用可能な関数" },
+  { "type": "file", "name": "additional-props", "label": "追加の Props" }
+]

@@ -1,0 +1,4 @@
+[
+  { "type": "file", "name": "introduction", "label": "Introduction" },
+  { "type": "file", "name": "quick", "label": "Quick Start" }
+]

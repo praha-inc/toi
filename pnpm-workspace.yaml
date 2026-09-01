@@ -1,6 +1,22 @@
+packages:
+  - 'website'
+
 allowBuilds:
   esbuild: false
+  sharp: false
   unrs-resolver: false
 
 minimumReleaseAgeExclude:
   - '@praha/*'
+
+overrides:
+  'rspress-plugin-og>@rspress/shared': '-'
+  'rspress-plugin-og>rspress': '-'
+
+packageExtensions:
+  'rspress-plugin-og':
+    dependencies:
+      rslog: '^2.0.0'
+
+patchedDependencies:
+  rspress-plugin-og: patches/rspress-plugin-og.patch

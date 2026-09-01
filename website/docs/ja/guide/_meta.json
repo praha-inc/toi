@@ -1,0 +1,4 @@
+[
+  { "type": "dir-section-header", "name": "start", "label": "はじめに" },
+  { "type": "dir-section-header", "name": "basic", "label": "基本" }
+]
