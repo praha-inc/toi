@@ -1,0 +1,215 @@
+/*
+ * 和 (wa) palette — the single source of truth for colour, radius and shadow,
+ * shared by the site theme (`../index.css`) and the live-preview iframes
+ * (`../preview/index.css`), which are separate documents and can't see each other's
+ * stylesheets.
+ *
+ * Three inks on washi paper, in the order they should appear on any screen:
+ *   墨 sumi   — ink, for text and rules
+ *   朱 shu    — vermillion, the one accent: seals, keywords, active states
+ *   藍 ai     — indigo, only where a second hue is unavoidable (string
+ *               literals in code, links inside the preview iframes)
+ * Everything else is paper: 生成り (kinari) in three depths.
+ *
+ * `.dark` inverts paper and ink; the vermillion warms slightly so it still
+ * reads as pigment rather than neon on a dark ground.
+ */
+
+:root {
+  --wa-sumi: #1b1916;
+  --wa-sumi-2: rgb(27 25 22 / 74%);
+  --wa-sumi-3: rgb(27 25 22 / 46%);
+  --wa-sumi-4: rgb(27 25 22 / 26%);
+  --wa-shu: #c33a2b;
+  --wa-shu-dark: #9a2b20;
+  --wa-shu-light: #dc6a5b;
+  /* For shu laid down thin (a low-opacity wash over the paper), where plain
+     shu goes dusty rose: brighter and more saturated, so the tint still
+     reads as vermillion. Not for solid fills or text. */
+  --wa-shu-vivid: #e63f27;
+  --wa-shu-tint: rgb(195 58 43 / 10%);
+  --wa-ai: #2f527c;
+  --wa-kinari: #f6f1e5;
+  --wa-kinari-soft: #eee7d6;
+  --wa-kinari-mute: #e3d9c1;
+  --wa-line: rgb(27 25 22 / 18%);
+  --wa-line-light: rgb(27 25 22 / 9%);
+
+  --wa-font-serif: 'Shippori Mincho', 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+  --wa-font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', 'Noto Sans JP', 'Hiragino Sans', sans-serif;
+  --wa-font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Paper grain, tiled over the whole page by `body::before`. */
+  --wa-grain: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.7 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --wa-grain-opacity: 0.09;
+  --wa-grain-blend: multiply;
+
+  /* Rspress theme variables, mapped onto the palette above. */
+  --rp-font-family-base: var(--wa-font-sans);
+  --rp-font-family-mono: var(--wa-font-mono);
+
+  --rp-c-brand: var(--wa-shu);
+  --rp-c-brand-light: var(--wa-shu-light);
+  --rp-c-brand-lighter: #efd3cd;
+  --rp-c-brand-dark: var(--wa-shu-dark);
+  --rp-c-brand-darker: #78201a;
+  --rp-c-brand-tint: var(--wa-shu-tint);
+  --rp-c-link: var(--wa-shu-dark);
+  --rp-home-hero-title-bg: var(--wa-shu);
+  /* `HomeBackground` paints a blurred brand gradient behind the home page; the ink field replaces it. */
+  --rp-home-background-bg: none;
+
+  --rp-c-bg: var(--wa-kinari);
+  --rp-c-bg-soft: var(--wa-kinari-soft);
+  --rp-c-bg-mute: var(--wa-kinari-mute);
+  --rp-c-bg-alt: var(--wa-kinari);
+  --rp-c-divider: var(--wa-line);
+  --rp-c-divider-light: var(--wa-line-light);
+
+  --rp-c-text-0: var(--wa-sumi);
+  --rp-c-text-1: var(--wa-sumi);
+  --rp-c-text-2: var(--wa-sumi-2);
+  --rp-c-text-3: var(--wa-sumi-3);
+  --rp-c-text-4: var(--wa-sumi-4);
+  --rp-c-text-code: var(--wa-sumi);
+  --rp-c-text-code-bg: var(--wa-kinari-soft);
+  --rp-c-text-code-border: var(--wa-line-light);
+
+  /* Sharp corners and no floating shadows: ink sits on paper, it doesn't hover. */
+  --rp-radius: 2px;
+  --rp-radius-small: 2px;
+  --rp-radius-large: 2px;
+  --rp-shadow-1: none;
+  --rp-shadow-2: 0 0 0 1px var(--wa-line-light);
+  --rp-shadow-3: 0 0 0 1px var(--wa-line), 0 18px 40px rgb(27 25 22 / 12%);
+  --rp-shadow-4: 0 0 0 1px var(--wa-line), 0 22px 56px rgb(27 25 22 / 16%);
+  --rp-shadow-5: 0 0 0 1px var(--wa-line), 0 28px 72px rgb(27 25 22 / 20%);
+
+  --rp-code-font-size: 0.85rem;
+  --rp-code-title-bg: var(--wa-kinari-mute);
+  --rp-code-block-color: var(--wa-sumi);
+  --rp-code-block-bg: var(--wa-kinari-soft);
+  --rp-code-block-border: 1px solid var(--wa-line);
+  --rp-code-block-shadow: none;
+  --rp-code-line-highlight-color: var(--wa-shu-tint);
+
+  --shiki-token-keyword: var(--wa-shu);
+  --shiki-token-string: var(--wa-ai);
+  --shiki-token-string-expression: var(--wa-ai);
+  --shiki-token-link: var(--wa-ai);
+  --shiki-token-constant: #4a5d7a;
+  --shiki-token-function: var(--wa-sumi);
+  --shiki-token-parameter: var(--wa-sumi-2);
+  --shiki-token-punctuation: var(--wa-sumi-3);
+  --shiki-token-comment: var(--wa-sumi-3);
+  --shiki-token-deleted: var(--wa-shu-dark);
+  --shiki-token-inserted: #4f7a5a;
+
+  --rp-container-tip-border: rgb(79 122 90 / 35%);
+  --rp-container-tip-text: #3f6b4b;
+  --rp-container-tip-bg: rgb(79 122 90 / 8%);
+  --rp-container-tip-code-bg: rgb(79 122 90 / 12%);
+  --rp-container-info-border: rgb(47 82 124 / 35%);
+  --rp-container-info-text: var(--wa-ai);
+  --rp-container-info-bg: rgb(47 82 124 / 7%);
+  --rp-container-info-code-bg: rgb(47 82 124 / 12%);
+  --rp-container-important-border: rgb(107 91 142 / 35%);
+  --rp-container-important-text: #5d4e80;
+  --rp-container-important-bg: rgb(107 91 142 / 8%);
+  --rp-container-important-code-bg: rgb(107 91 142 / 12%);
+  --rp-container-warning-border: rgb(181 138 42 / 45%);
+  --rp-container-warning-text: #8a6a1e;
+  --rp-container-warning-bg: rgb(181 138 42 / 10%);
+  --rp-container-warning-code-bg: rgb(181 138 42 / 14%);
+  --rp-container-danger-border: rgb(195 58 43 / 35%);
+  --rp-container-danger-text: var(--wa-shu-dark);
+  --rp-container-danger-bg: rgb(195 58 43 / 7%);
+  --rp-container-danger-code-bg: rgb(195 58 43 / 12%);
+
+  --rp-preview-button-bg: var(--wa-kinari-mute);
+  --rp-preview-button-hover-bg: var(--wa-kinari-mute);
+}
+
+.dark {
+  --wa-sumi: #ece5d6;
+  --wa-sumi-2: rgb(236 229 214 / 70%);
+  --wa-sumi-3: rgb(236 229 214 / 42%);
+  --wa-sumi-4: rgb(236 229 214 / 24%);
+  --wa-shu: #df6450;
+  --wa-shu-dark: #b93f30;
+  --wa-shu-light: #ec8878;
+  --wa-shu-tint: rgb(223 100 80 / 14%);
+  --wa-ai: #8aa6c9;
+  --wa-kinari: #161614;
+  --wa-kinari-soft: #1d1c19;
+  --wa-kinari-mute: #2a2823;
+  --wa-line: rgb(236 229 214 / 14%);
+  --wa-line-light: rgb(236 229 214 / 8%);
+
+  --wa-grain: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0.7 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --wa-grain-opacity: 0.05;
+  --wa-grain-blend: screen;
+
+  --rp-c-brand: var(--wa-shu);
+  --rp-c-brand-light: var(--wa-shu-light);
+  --rp-c-brand-lighter: #4a2b28;
+  --rp-c-brand-dark: var(--wa-shu-dark);
+  --rp-c-brand-darker: #8f3025;
+  --rp-c-brand-tint: var(--wa-shu-tint);
+  --rp-c-link: var(--wa-shu);
+  --rp-home-hero-title-bg: var(--wa-shu);
+  /* `HomeBackground` paints a blurred brand gradient behind the home page; the ink field replaces it. */
+  --rp-home-background-bg: none;
+
+  --rp-c-bg: var(--wa-kinari);
+  --rp-c-bg-soft: var(--wa-kinari-soft);
+  --rp-c-bg-mute: var(--wa-kinari-mute);
+  --rp-c-bg-alt: var(--wa-kinari);
+  --rp-c-divider: var(--wa-line);
+  --rp-c-divider-light: var(--wa-line-light);
+
+  --rp-c-text-0: var(--wa-sumi);
+  --rp-c-text-1: var(--wa-sumi);
+  --rp-c-text-2: var(--wa-sumi-2);
+  --rp-c-text-3: var(--wa-sumi-3);
+  --rp-c-text-4: var(--wa-sumi-4);
+  --rp-c-text-code: var(--wa-sumi);
+  --rp-c-text-code-bg: var(--wa-kinari-soft);
+  --rp-c-text-code-border: var(--wa-line-light);
+
+  --rp-shadow-3: 0 0 0 1px var(--wa-line), 0 18px 40px rgb(0 0 0 / 40%);
+  --rp-shadow-4: 0 0 0 1px var(--wa-line), 0 22px 56px rgb(0 0 0 / 45%);
+  --rp-shadow-5: 0 0 0 1px var(--wa-line), 0 28px 72px rgb(0 0 0 / 50%);
+
+  --rp-code-title-bg: var(--wa-kinari-mute);
+  --rp-code-block-color: var(--wa-sumi);
+  --rp-code-block-bg: var(--wa-kinari-soft);
+  --rp-code-block-border: 1px solid var(--wa-line);
+  --rp-code-line-highlight-color: var(--wa-shu-tint);
+
+  --shiki-token-keyword: var(--wa-shu);
+  --shiki-token-string: var(--wa-ai);
+  --shiki-token-string-expression: var(--wa-ai);
+  --shiki-token-link: var(--wa-ai);
+  --shiki-token-constant: #a9bbd6;
+  --shiki-token-function: var(--wa-sumi);
+  --shiki-token-parameter: var(--wa-sumi-2);
+  --shiki-token-punctuation: var(--wa-sumi-3);
+  --shiki-token-comment: var(--wa-sumi-3);
+  --shiki-token-deleted: var(--wa-shu);
+  --shiki-token-inserted: #7fae8c;
+
+  --rp-container-tip-text: #8fbf9c;
+  --rp-container-tip-bg: rgb(79 122 90 / 14%);
+  --rp-container-info-text: var(--wa-ai);
+  --rp-container-info-bg: rgb(138 166 201 / 10%);
+  --rp-container-important-text: #b3a3d8;
+  --rp-container-important-bg: rgb(107 91 142 / 16%);
+  --rp-container-warning-text: #d9b45a;
+  --rp-container-warning-bg: rgb(181 138 42 / 14%);
+  --rp-container-danger-text: var(--wa-shu-light);
+  --rp-container-danger-bg: rgb(223 100 80 / 12%);
+
+  --rp-preview-button-bg: var(--wa-kinari-mute);
+  --rp-preview-button-hover-bg: var(--wa-kinari-mute);
+}

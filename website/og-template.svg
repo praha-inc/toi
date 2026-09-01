@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!--
+    OG image template for rspress-plugin-og. The plugin substitutes
+    {{line1}}–{{line3}} with the page title, broken every 20 characters, and
+    rasterises this with sharp (librsvg) — so no web fonts, only whatever the
+    build machine has installed. The families match the site (see
+    theme/styles/wa-vars.css): Shippori Mincho for display, Noto Sans JP for
+    the colophon, each falling back to the generic family.
+
+    Same grammar as the site: 生成り paper, hairline rules, 隅 corner marks,
+    one vermillion accent, and the toi mark (問 as a gate with a seal inside —
+    see theme/components/Mark/index.tsx; the paths here are copied from it).
+  -->
+  <defs>
+    <style>
+      .serif { font-family: 'Shippori Mincho', serif; }
+      .sans { font-family: 'Noto Sans JP', sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Paper -->
+  <rect width="1200" height="630" fill="#f6f1e5"/>
+
+  <!-- The mark, large and faint, off to the right: a watermark rather than a second logo -->
+  <g transform="translate(700 95) scale(4.4)" opacity="0.13">
+    <path d="M14 88V12H42V40H14M14 26H42M86 88V12H58V40H86M58 26H86" fill="none" stroke="#1b1916" stroke-width="7" stroke-linejoin="miter"/>
+    <path d="M38 54L62 55L61.5 80L38.5 79Z" fill="#c33a2b"/>
+  </g>
+
+  <!-- Hairline frame with 隅 corner marks -->
+  <rect x="40" y="40" width="1120" height="550" fill="none" stroke="#1b1916" stroke-opacity="0.16" stroke-width="1"/>
+  <g fill="none" stroke="#1b1916" stroke-width="2">
+    <path d="M40 64V40H64"/>
+    <path d="M1136 40H1160V64"/>
+    <path d="M40 566V590H64"/>
+    <path d="M1136 590H1160V566"/>
+  </g>
+
+  <!-- Lockup: mark + wordmark -->
+  <g transform="translate(96 84) scale(0.6)">
+    <path d="M14 88V12H42V40H14M14 26H42M86 88V12H58V40H86M58 26H86" fill="none" stroke="#1b1916" stroke-width="7" stroke-linejoin="miter"/>
+    <path d="M38 54L62 55L61.5 80L38.5 79Z" fill="#c33a2b"/>
+  </g>
+  <text x="172" y="130" class="serif" font-size="36" font-weight="700" letter-spacing="1.5" fill="#1b1916">toi</text>
+  <text x="172" y="94" class="serif" font-size="13" letter-spacing="6" fill="#1b1916" fill-opacity="0.5">とい</text>
+
+  <!-- Title -->
+  <rect x="96" y="238" width="56" height="3" fill="#c33a2b"/>
+  <text x="96" y="326" class="serif" font-size="48" font-weight="700" letter-spacing="1" fill="#1b1916">{{line1}}</text>
+  <text x="96" y="394" class="serif" font-size="48" font-weight="700" letter-spacing="1" fill="#1b1916">{{line2}}</text>
+  <text x="96" y="462" class="serif" font-size="48" font-weight="700" letter-spacing="1" fill="#1b1916">{{line3}}</text>
+
+  <!-- Colophon -->
+  <line x1="96" y1="524" x2="1104" y2="524" stroke="#1b1916" stroke-opacity="0.18" stroke-width="1"/>
+  <text x="96" y="558" class="sans" font-size="18" letter-spacing="0.5" fill="#1b1916" fill-opacity="0.72">A tiny headless React utility for imperative dialogs and toasts.</text>
+  <text x="1104" y="558" text-anchor="end" class="sans" font-size="16" letter-spacing="1" fill="#1b1916" fill-opacity="0.5">praha-inc.github.io/toi</text>
+</svg>

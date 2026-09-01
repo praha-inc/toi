@@ -1,0 +1,99 @@
+/*
+ * Styles for the live-preview iframes (@rspress/plugin-preview). These are
+ * separate documents, so the palette is pulled in via `../styles/wa-vars.css`
+ * (see `preEntry` in rspress.config.ts) and the same grammar is repeated here:
+ * paper ground, hairline rules, sharp corners, ink outlines, one vermillion.
+ */
+@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@700&family=Noto+Sans+JP:wght@400;500;700&display=swap');
+
+/* The plugin's own entry.css forces these two; `html:root` outranks it. */
+html:root {
+  --rp-iframe-bg: var(--wa-kinari);
+  --rp-iframe-nav-bg: var(--wa-kinari-soft);
+}
+
+body {
+  padding: 24px;
+  font-family: var(--wa-font-sans);
+  color: var(--wa-sumi);
+}
+
+.rp-preview-nav {
+  font-family: var(--wa-font-serif) !important;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--wa-line);
+}
+
+#root {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+#root p {
+  margin: 0 0 12px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--wa-sumi);
+}
+
+#root button {
+  appearance: none;
+  padding: 9px 18px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  color: var(--wa-sumi);
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid var(--wa-sumi);
+  border-radius: 2px;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+}
+
+#root button:hover {
+  color: var(--wa-kinari);
+  background: var(--wa-sumi);
+}
+
+#root button:active {
+  transform: scale(0.97);
+}
+
+#root button:focus-visible {
+  outline: 1px solid var(--wa-shu);
+  outline-offset: 3px;
+}
+
+/* The <section aria-label="notifications"> ToiHost renders, and the cards inside it. */
+#root section[aria-label='notifications'] {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+}
+
+#root section[aria-label='notifications'] > dialog,
+#root section[aria-label='notifications'] > div {
+  position: initial;
+  margin: 0;
+  padding: 18px 22px;
+  color: var(--wa-sumi);
+  background: var(--wa-kinari-soft);
+  border: 1px solid var(--wa-line);
+  border-left: 3px solid var(--wa-shu);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+#root section[aria-label='notifications'] p:last-of-type {
+  margin-bottom: 0;
+}
+
+#root section[aria-label='notifications'] button + button {
+  margin-left: 8px;
+}

@@ -1,95 +1,54 @@
-# @praha/toi
+# toi
 
 [![npm version](https://badge.fury.io/js/@praha%2Ftoi.svg)](https://www.npmjs.com/package/@praha/toi)
 [![npm download](https://img.shields.io/npm/dm/@praha/toi.svg)](https://www.npmjs.com/package/@praha/toi)
 [![license](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/praha-inc/toi/blob/main/LICENSE)
 [![Github](https://img.shields.io/github/followers/praha-inc?label=Follow&logo=github&style=social)](https://github.com/orgs/praha-inc/followers)
 
-## 👏 Getting Started
-
-### Installation
-
-```bash
-npm install @praha/toi
-```
-
-### Usage
-
-Render `ToiHost` once, anywhere in your component tree, to give `toi` a place to mount the components it renders.
+A tiny headless React utility for building imperative dialogs/toasts.
 
 ```tsx
-import { ToiHost } from '@praha/toi';
-
-const App = () => (
-  <>
-    <YourApp />
-    <ToiHost />
-  </>
-);
-```
-
-Call `toi` with a component to mount it into the `ToiHost` and await the value passed to its `resolve` prop.
-
-```tsx
-import { toi } from '@praha/toi';
-
-import type { ToiProps } from '@praha/toi';
-import type { FC } from 'react';
-
-const Confirm: FC<ToiProps<boolean>> = ({ ref, resolve }) => (
-  <dialog ref={ref} open>
-    <button onClick={() => resolve(true)}>OK</button>
-    <button onClick={() => resolve(false)}>Cancel</button>
-  </dialog>
-);
-
 const confirmed = await toi(Confirm);
 ```
 
-`resolve` can also be called with no argument for components that don't need to resolve with a value, such as toasts.
+This repository is a monorepo managed with [pnpm workspaces](https://pnpm.io/workspaces) and [Turborepo](https://turbo.build/).
 
-```tsx
-const Toast: FC<ToiProps> = ({ ref, resolve }) => (
-  <div ref={ref} onAnimationEnd={() => resolve()}>
-    Saved!
-  </div>
-);
+## 📦 Packages
 
-await toi(Toast);
+| Package | Description |
+| --- | --- |
+| [`@praha/toi`](./packages/toi) | The library published to npm. See its [README](./packages/toi/README.md) for installation and usage. |
+| [`website`](./website) | The documentation site built with [Rspress](https://rspress.rs/), deployed to [praha-inc.github.io/toi](https://praha-inc.github.io/toi). |
+
+## 🛠 Development
+
+### Prerequisites
+
+- Node.js (the version is pinned in [`.tool-versions`](./.tool-versions))
+- [pnpm](https://pnpm.io/)
+
+### Setup
+
+```bash
+pnpm install
 ```
 
-Once `resolve` is called, the component stays mounted until any running animations (excluding infinite ones) on the element attached to `ref` finish, so exit animations can play out before it's removed from the `ToiHost` and the promise resolves.
+### Commands
 
-Use `toi.fn` to bind a component to `toi` once and reuse the resulting function.
+Run these from the repository root. Each command runs the corresponding task in every workspace package via Turborepo.
 
-```tsx
-const confirm = toi.fn(Confirm);
-const confirmed = await confirm();
+```bash
+pnpm run build      # Build all packages
+pnpm run test       # Run tests
+pnpm run lint:code  # Lint with oxlint
+pnpm run lint:type  # Type-check with tsc
 ```
 
-Pass a second argument to `toi` for components that need additional props beyond `resolve` and `ref`.
+To run a task in a single package, use pnpm's `--filter` option.
 
-```tsx
-type ConfirmProps = ToiProps<boolean> & { message: string };
-
-const Confirm: FC<ConfirmProps> = ({ ref, resolve, message }) => (
-  <dialog ref={ref} open>
-    <p>{message}</p>
-    <button onClick={() => resolve(true)}>OK</button>
-    <button onClick={() => resolve(false)}>Cancel</button>
-  </dialog>
-);
-
-const confirmed = await toi(Confirm, { message: 'Are you sure?' });
-```
-
-`toi.fn`'s second argument works the same way, but as *default* props: they're used whenever the returned function is called without its own `props` argument, and can be overridden per call by passing `props` anyway.
-
-```tsx
-const confirm = toi.fn(Confirm, { message: 'Are you sure?' });
-
-const confirmed = await confirm(); // uses the default message: 'Are you sure?'
-const confirmedAgain = await confirm({ message: 'Really?' }); // overrides it
+```bash
+pnpm --filter @praha/toi run test
+pnpm --filter @praha/toi-website run dev
 ```
 
 ## 🤝 Contributing

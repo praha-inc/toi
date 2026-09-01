@@ -25,7 +25,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Build
-        run: pnpm run build
+        run: pnpm run build --filter @praha/toi
 
       - name: Prepublish
         run: pnpm run version:prepublish

@@ -4,10 +4,12 @@
     "@tsconfig/strictest/tsconfig.json"
   ],
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "esModuleInterop": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "esModuleInterop": true,
-    "target": "ES2022",
+    "noEmit": true,
+    "target": "ESNext",
     "jsx": "react-jsx"
   }
 }

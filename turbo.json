@@ -1,0 +1,33 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [
+    "tsconfig.json",
+    "oxlint.config.ts"
+  ],
+  "tasks": {
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**",
+        "doc_build/**"
+      ]
+    },
+    "test": {
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "lint:code": {
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "lint:type": {
+      "dependsOn": [
+        "^build"
+      ]
+    }
+  }
+}

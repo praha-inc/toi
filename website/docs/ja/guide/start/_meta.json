@@ -1,0 +1,5 @@
+[
+  { "type": "file", "name": "introduction", "label": "イントロダクション" },
+  { "type": "file", "name": "name", "label": "名前について" },
+  { "type": "file", "name": "quick", "label": "クイックスタート" }
+]
