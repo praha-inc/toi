@@ -14,14 +14,16 @@ const store = createStore();
  * Type of the `resolve` callback passed to a component rendered by {@link toi},
  * which resolves the promise it returned with the given response.
  */
-export type ToiResolve<Response> = (response: Response) => void;
+export type ToiResolve<Response> = [Response] extends [void] ? () => void : (response: Response) => void;
 
 /** The `Response` type a component resolves with, extracted from its props or its own type. */
 export type InferToiResponse<T> = T extends FC<infer Props>
   ? InferToiResponse<Props>
-  : T extends { resolve: ToiResolve<infer Response> }
-    ? Response
-    : never;
+  : T extends { resolve: () => void }
+    ? void
+    : T extends { resolve: (response: infer Response) => void }
+      ? Response
+      : never;
 
 /**
  * Props injected into the component passed to {@link toi}.
@@ -83,6 +85,8 @@ export type ToiProps<Response = void> = {
    */
   resolve: ToiResolve<Response>;
 };
+
+type AnyToiProps = Omit<ToiProps<never>, 'resolve'> & { resolve: (response: never) => void };
 
 /** Runtime implementation shared by {@link toi} and {@link toi.fn}, untyped to bypass their overloads. */
 const mount = (Component: FC<Record<string, unknown>>, props?: Record<string, unknown>): Promise<unknown> => {
@@ -159,7 +163,7 @@ const mount = (Component: FC<Record<string, unknown>>, props?: Record<string, un
  * ```
  */
 export function toi<Component extends FC<never>>(
-  Component: Component & AssertExtends<Parameters<Component>[0], ToiProps<never>>,
+  Component: Component & AssertExtends<Parameters<Component>[0], AnyToiProps>,
   ...[props]: PropsArgs<Omit<Parameters<Component>[0], keyof ToiProps<never>>>
 ): Promise<InferToiResponse<Component>>;
 /**
@@ -277,7 +281,7 @@ export namespace toi {
    * ```
    */
   export function fn<Props extends Record<string, unknown>>(
-    Component: FC<Props> & AssertExtends<Props, ToiProps<never>>,
+    Component: FC<Props> & AssertExtends<Props, AnyToiProps>,
   ): (...[props]: PropsArgs<Omit<Props, keyof ToiProps<never>>>) => Promise<InferToiResponse<Props>>;
   /**
    * Binds `Component` to {@link toi}, returning a reusable function that
@@ -324,7 +328,7 @@ export namespace toi {
    * ```
    */
   export function fn<Props extends Record<string, unknown>>(
-    Component: FC<Props> & AssertExtends<Props, ToiProps<never>>,
+    Component: FC<Props> & AssertExtends<Props, AnyToiProps>,
     defaultProps: Omit<Props, keyof ToiProps<never>>,
   ): (props?: Omit<Props, keyof ToiProps<never>>) => Promise<InferToiResponse<Props>>;
   /**
