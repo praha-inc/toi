@@ -423,7 +423,7 @@ export namespace toi {
     defaultProps: Omit<Props, keyof ToiProps<never>>,
   ): (props?: Omit<Props, keyof ToiProps<never>>) => Promise<Response>;
   export function fn(Component: FC<Record<string, unknown>>, defaultProps?: Record<string, unknown>) {
-    return (props?: Record<string, unknown>) => mount(Component, props ?? defaultProps);
+    return (props?: Record<string, unknown>) => mount(Component, { ...defaultProps, ...props });
   }
 }
 
