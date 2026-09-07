@@ -15,11 +15,11 @@ importers:
         specifier: 3.0.1
         version: 3.0.1
       '@praha/oxlint-config-react':
-        specifier: 1.0.1
-        version: 1.0.1(eslint@10.10.0)(oxlint-tsgolint@7.0.2001)(oxlint@1.81.0(oxlint-tsgolint@7.0.2001))(storybook@10.6.0(@types/react@19.2.18)(react@19.2.8))(typescript@7.0.2)
+        specifier: 1.0.2
+        version: 1.0.2(eslint@10.10.0)(oxlint-tsgolint@7.0.2001)(oxlint@1.81.0(oxlint-tsgolint@7.0.2001))(storybook@10.6.0(@types/react@19.2.18)(react@19.2.8))(typescript@7.0.2)
       '@praha/oxlint-config-standard':
-        specifier: 1.0.1
-        version: 1.0.1(@praha/byethrow@0.12.0(typescript@7.0.2))(@typescript-eslint/utils@8.69.0(eslint@10.10.0)(typescript@7.0.2))(eslint@10.10.0)(oxlint-tsgolint@7.0.2001)(oxlint@1.81.0(oxlint-tsgolint@7.0.2001))
+        specifier: 1.0.2
+        version: 1.0.2(@praha/byethrow@0.12.0(typescript@7.0.2))(@typescript-eslint/utils@8.69.0(eslint@10.10.0)(typescript@7.0.2))(eslint@10.10.0)(oxlint-tsgolint@7.0.2001)(oxlint@1.81.0(oxlint-tsgolint@7.0.2001))
       '@rsbuild/plugin-react':
         specifier: 2.1.0
         version: 2.1.0(@rsbuild/core@2.1.13)(@rspack/core@2.1.10(@swc/helpers@0.5.23))
@@ -917,21 +917,21 @@ packages:
     peerDependencies:
       typescript: '>=5.0.0'
 
-  '@praha/oxlint-config-internal@1.0.1':
-    resolution: {integrity: sha512-jdzgcFrIsn6/XgD5sdd2WM2zkykT/yjIulCb8Bg3Ej9sQqDWYlyQjsZBXE03Vq+DbduAwgKKEh6PG9PPRdnEmA==}
+  '@praha/oxlint-config-internal@1.0.2':
+    resolution: {integrity: sha512-obSKNMD9Xe9cvZItBYpZUngsxd8HziyyMBwP/AhW9/T3lCSNiG9x+Fqe1zi2QMTj87FcD/pQup2AuHQGyrt0Sg==}
     peerDependencies:
       oxlint: ^1.79.0
       oxlint-tsgolint: '>=0.20.0'
 
-  '@praha/oxlint-config-react@1.0.1':
-    resolution: {integrity: sha512-6omJe2MDSE1Y7ueCVuyVlerSV9E9QVUvoPOn6sPxhFLbsGAB/xHC/22VnfvmvX2+KpSBzKZvhyox8PFu9Au/TA==}
+  '@praha/oxlint-config-react@1.0.2':
+    resolution: {integrity: sha512-A5naeRBTWLqsCPAQh/TKM/ds0WZ05pbufbn4DysNUESaCPwyD6MxvwMJMmr2mm0z7Wv4Sq4AGlxfEM6WC012Qg==}
     peerDependencies:
       oxlint: ^1.79.0
       oxlint-tsgolint: '>=0.20.0'
       storybook: ^10.3.5
 
-  '@praha/oxlint-config-standard@1.0.1':
-    resolution: {integrity: sha512-u+0MRyRArguz+Rhi18fl6Udzhp75KGLwXzjc6Vw27YwuXXpFmF6eiIGH1j8IhlZ1uODooVFNfZ4IBHEzbZR1WQ==}
+  '@praha/oxlint-config-standard@1.0.2':
+    resolution: {integrity: sha512-9s5alBrysg7c8nbLnWSz4VavdY+u4fJw6Q9Gzd/WP2abu9j7IaJcd/rpEP/6E0T8GPiyDCcQxzhEUv6fJIz7rQ==}
     peerDependencies:
       oxlint: ^1.79.0
       oxlint-tsgolint: ^7.0.0
@@ -3226,14 +3226,14 @@ snapshots:
       '@standard-schema/spec': 1.1.0
       typescript: 7.0.2
 
-  '@praha/oxlint-config-internal@1.0.1(oxlint-tsgolint@7.0.2001)(oxlint@1.81.0(oxlint-tsgolint@7.0.2001))':
+  '@praha/oxlint-config-internal@1.0.2(oxlint-tsgolint@7.0.2001)(oxlint@1.81.0(oxlint-tsgolint@7.0.2001))':
     dependencies:
       oxlint: 1.81.0(oxlint-tsgolint@7.0.2001)
       oxlint-tsgolint: 7.0.2001
 
-  '@praha/oxlint-config-react@1.0.1(eslint@10.10.0)(oxlint-tsgolint@7.0.2001)(oxlint@1.81.0(oxlint-tsgolint@7.0.2001))(storybook@10.6.0(@types/react@19.2.18)(react@19.2.8))(typescript@7.0.2)':
+  '@praha/oxlint-config-react@1.0.2(eslint@10.10.0)(oxlint-tsgolint@7.0.2001)(oxlint@1.81.0(oxlint-tsgolint@7.0.2001))(storybook@10.6.0(@types/react@19.2.18)(react@19.2.8))(typescript@7.0.2)':
     dependencies:
-      '@praha/oxlint-config-internal': 1.0.1(oxlint-tsgolint@7.0.2001)(oxlint@1.81.0(oxlint-tsgolint@7.0.2001))
+      '@praha/oxlint-config-internal': 1.0.2(oxlint-tsgolint@7.0.2001)(oxlint@1.81.0(oxlint-tsgolint@7.0.2001))
       eslint-plugin-storybook: 10.6.0(eslint@10.10.0)(typescript@7.0.2)
       oxlint: 1.81.0(oxlint-tsgolint@7.0.2001)
       oxlint-tsgolint: 7.0.2001
@@ -3243,10 +3243,10 @@ snapshots:
       - supports-color
       - typescript
 
-  '@praha/oxlint-config-standard@1.0.1(@praha/byethrow@0.12.0(typescript@7.0.2))(@typescript-eslint/utils@8.69.0(eslint@10.10.0)(typescript@7.0.2))(eslint@10.10.0)(oxlint-tsgolint@7.0.2001)(oxlint@1.81.0(oxlint-tsgolint@7.0.2001))':
+  '@praha/oxlint-config-standard@1.0.2(@praha/byethrow@0.12.0(typescript@7.0.2))(@typescript-eslint/utils@8.69.0(eslint@10.10.0)(typescript@7.0.2))(eslint@10.10.0)(oxlint-tsgolint@7.0.2001)(oxlint@1.81.0(oxlint-tsgolint@7.0.2001))':
     dependencies:
       '@praha/byethrow-oxlint': 0.12.0(@praha/byethrow@0.12.0(typescript@7.0.2))(oxlint@1.81.0(oxlint-tsgolint@7.0.2001))
-      '@praha/oxlint-config-internal': 1.0.1(oxlint-tsgolint@7.0.2001)(oxlint@1.81.0(oxlint-tsgolint@7.0.2001))
+      '@praha/oxlint-config-internal': 1.0.2(oxlint-tsgolint@7.0.2001)(oxlint@1.81.0(oxlint-tsgolint@7.0.2001))
       '@stylistic/eslint-plugin': 5.10.0(eslint@10.10.0)
       eslint-plugin-import-x: 4.17.1(@typescript-eslint/utils@8.69.0(eslint@10.10.0)(typescript@7.0.2))(eslint@10.10.0)
       eslint-plugin-unicorn: 64.0.0(eslint@10.10.0)
