@@ -27,6 +27,7 @@ export default defineConfig({
       index: [
         './src/**',
         '!**/*.test.*',
+        '!**/*.test-d.*',
       ],
     },
     tsconfigPath: './tsconfig.build.json',
