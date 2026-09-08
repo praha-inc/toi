@@ -52,7 +52,7 @@
     "version:prepublish": "pkg-pr-new publish --pnpm --compact"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "1.0.0",
+    "@changesets/changelog-github": "1.0.1",
     "@changesets/cli": "3.0.1",
     "@praha/oxlint-config-react": "1.0.2",
     "@praha/oxlint-config-standard": "1.0.2",
