@@ -1,0 +1,534 @@
+/*
+ * 和 (wa) theme — ink (墨) and vermillion (朱) on washi paper, carried through
+ * the whole site rather than the home page alone: one accent colour, hairline
+ * rules instead of soft shadows, sharp corners instead of pills, Mincho for
+ * anything that acts as a heading. Palette and variable mapping live in
+ * `wa-vars.css`; this file is the component-level detailing. See
+ * https://rspress.rs/ui/vars for the variables being overridden.
+ */
+@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import './wa-vars.css';
+
+/* ---------------------------------------------------------------------------
+ * Paper
+ * ------------------------------------------------------------------------ */
+
+html {
+  font-feature-settings: 'palt' 1;
+}
+
+/* Washi grain over everything; pointer-events off so it's purely optical. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background-image: var(--wa-grain);
+  background-size: 240px 240px;
+  opacity: var(--wa-grain-opacity);
+  mix-blend-mode: var(--wa-grain-blend);
+}
+
+::selection {
+  background: rgb(195 58 43 / 22%);
+}
+
+:focus-visible {
+  outline: 1px solid var(--wa-shu);
+  outline-offset: 3px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Nav — the mark (see theme/components/Mark; the files are docs/public/logo-*.svg)
+ * before a Mincho wordmark, and a hairline under the active menu item
+ * instead of a colour change alone.
+ * ------------------------------------------------------------------------ */
+
+.rp-nav__title__link {
+  gap: 0.65rem;
+  font-family: var(--wa-font-serif);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--wa-sumi);
+}
+
+.rp-nav__title__logo {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  margin-right: 0;
+}
+
+.rp-nav__title__logo-image {
+  width: 1.7rem;
+  height: 1.7rem;
+}
+
+.rp-nav-menu__item__container {
+  letter-spacing: 0.04em;
+  color: var(--wa-sumi-2);
+}
+
+.rp-nav-menu__item__container:hover {
+  color: var(--wa-sumi);
+}
+
+.rp-nav-menu__item--active::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: var(--wa-shu);
+}
+
+.rp-nav-menu__divider {
+  background: var(--wa-line);
+}
+
+.rp-search-button {
+  min-width: 150px;
+  height: 36px;
+  background: transparent;
+  border-color: var(--wa-line);
+  backdrop-filter: none;
+}
+
+.rp-search-button:hover {
+  border-color: var(--wa-sumi);
+}
+
+.rp-search-button__hotkey {
+  font-family: var(--wa-font-mono);
+  font-size: 11px;
+  color: var(--wa-sumi-3);
+  background: transparent;
+  border: 1px solid var(--wa-line-light);
+}
+
+.rp-hover-group {
+  border: 1px solid var(--wa-line);
+  box-shadow: none;
+}
+
+/* ---------------------------------------------------------------------------
+ * Sidebar — flat list, vermillion rule against the active item, section
+ * headers set in Mincho with a small seal-red square.
+ * ------------------------------------------------------------------------ */
+
+.rp-doc-layout__sidebar {
+  border-right-color: var(--wa-line-light);
+}
+
+.rp-sidebar-section-header__left {
+  gap: 0.6rem;
+  font-family: var(--wa-font-serif);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--wa-sumi);
+}
+
+.rp-sidebar-section-header__left::before {
+  content: '';
+  flex-shrink: 0;
+  width: 5px;
+  height: 5px;
+  background: var(--wa-shu);
+}
+
+/* Doubled class selectors so these outrank Rspress's own rules regardless of stylesheet order. */
+.rp-sidebar-item.rp-sidebar-item {
+  margin-top: 0;
+  padding: 7px 12px 7px 24px;
+  font-size: 13.5px;
+  letter-spacing: 0.02em;
+  border-radius: 0;
+  box-shadow: inset 1px 0 0 var(--wa-line-light);
+}
+
+.rp-sidebar-item.rp-sidebar-item:hover,
+.rp-sidebar-item.rp-sidebar-item--pending {
+  color: var(--wa-sumi);
+  background: transparent;
+  box-shadow: inset 1px 0 0 var(--wa-sumi-3);
+}
+
+.rp-sidebar-item.rp-sidebar-item--active,
+.rp-sidebar-item.rp-sidebar-item--active:hover {
+  color: var(--wa-shu);
+  font-weight: 600;
+  background: transparent;
+  box-shadow: inset 2px 0 0 var(--wa-shu);
+}
+
+.rp-sidebar-item--group-item::before,
+.rp-sidebar-item--group-item.rp-sidebar-item--active .rp-sidebar-item__left::before {
+  display: none;
+}
+
+.rp-sidebar-menu {
+  border-bottom-color: var(--wa-line-light);
+}
+
+/* ---------------------------------------------------------------------------
+ * Outline (右側の目次)
+ * ------------------------------------------------------------------------ */
+
+.rp-outline {
+  border-left-color: var(--wa-line-light);
+}
+
+.rp-outline__title {
+  font-family: var(--wa-font-serif);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+}
+
+.rp-toc-item__text {
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+.rp-toc-item--active .rp-toc-item__text {
+  color: var(--wa-shu);
+}
+
+.rp-outline__action-row {
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+}
+
+/* ---------------------------------------------------------------------------
+ * Article — Mincho headings; a short vermillion stroke under the title, a
+ * hairline above every section heading, underlined links.
+ * ------------------------------------------------------------------------ */
+
+main.rp-doc-layout__doc-container .rp-doc h1,
+main.rp-doc-layout__doc-container .rp-doc h2,
+main.rp-doc-layout__doc-container .rp-doc h3,
+main.rp-doc-layout__doc-container .rp-doc h4 {
+  font-family: var(--wa-font-serif);
+  font-weight: 700;
+  color: var(--wa-sumi);
+}
+
+main.rp-doc-layout__doc-container .rp-doc h1 {
+  margin-bottom: 1.5rem;
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+}
+
+main.rp-doc-layout__doc-container .rp-doc h1::after {
+  content: '';
+  display: block;
+  width: 3rem;
+  height: 2px;
+  margin-top: 1.1rem;
+  background: var(--wa-shu);
+}
+
+main.rp-doc-layout__doc-container .rp-doc h2 {
+  margin-top: 3.5rem;
+  padding-top: 2.25rem;
+  font-size: 1.55rem;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  border-top: 1px solid var(--wa-line);
+}
+
+main.rp-doc-layout__doc-container .rp-doc h2:first-of-type::before {
+  display: none;
+}
+
+main.rp-doc-layout__doc-container .rp-doc h3 {
+  margin-top: 2.5rem;
+  font-size: 1.2rem;
+  letter-spacing: 0.02em;
+}
+
+main.rp-doc-layout__doc-container .rp-doc h4 {
+  font-size: 1.05rem;
+}
+
+main.rp-doc-layout__doc-container .rp-doc .rp-header-anchor {
+  font-family: var(--wa-font-sans);
+  color: var(--wa-shu);
+}
+
+main.rp-doc-layout__doc-container .rp-doc p:not(li p) {
+  line-height: 1.9;
+  letter-spacing: 0.01em;
+  color: var(--wa-sumi-2);
+}
+
+main.rp-doc-layout__doc-container .rp-doc li {
+  line-height: 1.85;
+  color: var(--wa-sumi-2);
+}
+
+main.rp-doc-layout__doc-container .rp-doc strong {
+  color: var(--wa-sumi);
+}
+
+main.rp-doc-layout__doc-container .rp-doc a.rp-link:not(.rp-header-anchor) {
+  color: var(--wa-sumi);
+  text-decoration: underline;
+  text-decoration-color: var(--wa-shu);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  transition: color 0.2s ease;
+}
+
+main.rp-doc-layout__doc-container .rp-doc a.rp-link:not(.rp-header-anchor):hover {
+  color: var(--wa-shu);
+  border-bottom: none;
+  opacity: 1;
+}
+
+main.rp-doc-layout__doc-container .rp-doc :not(pre) > code {
+  padding: 0.12em 0.45em;
+  font-size: 0.85em;
+  color: var(--wa-sumi);
+  background: var(--wa-kinari-soft);
+  border: 1px solid var(--wa-line);
+  border-radius: 2px;
+}
+
+main.rp-doc-layout__doc-container .rp-doc a > code {
+  color: inherit;
+}
+
+main.rp-doc-layout__doc-container .rp-doc blockquote {
+  border-left: 2px solid var(--wa-shu);
+  padding-left: 1.25rem;
+}
+
+main.rp-doc-layout__doc-container .rp-doc hr {
+  border-color: var(--wa-line);
+}
+
+main.rp-doc-layout__doc-container .rp-doc thead {
+  background: var(--wa-kinari-soft);
+}
+
+main.rp-doc-layout__doc-container .rp-doc th {
+  font-family: var(--wa-font-serif);
+  letter-spacing: 0.06em;
+  border-bottom-color: var(--wa-line);
+}
+
+/* A framed figure for the logo on the "name" page (the mark itself follows the theme via currentColor). */
+.wa-figure {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0 2.5rem;
+  padding: 2.5rem;
+  background: var(--wa-kinari-soft);
+  border: 1px solid var(--wa-line);
+}
+
+.wa-figure__mark {
+  display: block;
+  width: 7rem;
+  height: 7rem;
+  color: var(--wa-sumi);
+}
+
+/* Code blocks: paper-soft ground, hairline frame, no shadow. */
+.rp-codeblock {
+  border-color: var(--wa-line);
+}
+
+.rp-codeblock__title {
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--wa-sumi-2);
+}
+
+.rp-code-button-group__icon {
+  color: var(--wa-sumi-3);
+}
+
+.rp-code-button-group__icon:hover {
+  color: var(--wa-sumi);
+}
+
+.rp-code-copy-button__icon--success,
+.rp-code-button-group__icon--wrapped,
+.rp-llms-copy-button--success .rp-llms-copy-button__icon-success {
+  color: var(--wa-shu);
+}
+
+.rp-llms-copy-button--success.rp-llms-copy-button {
+  color: var(--wa-shu);
+  border-color: var(--wa-shu);
+}
+
+.rp-llms-button {
+  height: 32px;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  background: transparent;
+  border-color: var(--wa-line);
+  border-radius: 2px;
+}
+
+.rp-llms-button:hover {
+  color: var(--wa-sumi);
+  background: transparent;
+  border-color: var(--wa-sumi);
+  box-shadow: none;
+}
+
+.rp-callout {
+  border-radius: 0;
+  border-left-width: 2px;
+}
+
+.rp-callout__title {
+  font-family: var(--wa-font-serif);
+  letter-spacing: 0.04em;
+}
+
+.rp-callout__title::before {
+  display: none;
+}
+
+.rp-tabs__label__item--selected {
+  box-shadow: inset 0 -1px 0 var(--wa-shu);
+  border-radius: 0;
+}
+
+/* ---------------------------------------------------------------------------
+ * Article footer
+ * ------------------------------------------------------------------------ */
+
+.rp-doc-footer__divider {
+  height: 1px;
+  background: var(--wa-line);
+}
+
+.rp-doc-footer .rp-edit-link {
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  color: var(--wa-sumi-2);
+}
+
+.rp-doc-footer .rp-edit-link:hover {
+  color: var(--wa-shu);
+}
+
+.rp-prev-next-page {
+  gap: 1rem;
+}
+
+.rp-prev-next-page__item {
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--wa-line-light);
+  border-radius: 0;
+  transition: border-color 0.2s ease;
+}
+
+.rp-prev-next-page__item:hover {
+  opacity: 1;
+  background: transparent;
+  border-color: var(--wa-sumi);
+}
+
+.rp-prev-next-page__item__title {
+  font-family: var(--wa-font-serif);
+  font-weight: 700;
+  color: var(--wa-sumi);
+}
+
+.rp-prev-next-page__item__desc {
+  padding: 0;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------------------------
+ * Live previews (@rspress/plugin-preview) — the frame around the iframe.
+ * ------------------------------------------------------------------------ */
+
+.rp-preview--iframe-follow,
+.rp-preview--internal__card {
+  border-color: var(--wa-line);
+  border-radius: 0;
+}
+
+.rp-preview--iframe-follow__device,
+.rp-preview--iframe-follow__device iframe {
+  border-color: var(--wa-line);
+}
+
+.rp-preview-operations__button {
+  border: 1px solid var(--wa-line);
+  border-radius: 0;
+  background: transparent;
+  color: var(--wa-sumi-2);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.rp-preview-operations__button:hover {
+  background: transparent;
+  border-color: var(--wa-sumi);
+  color: var(--wa-sumi);
+}
+
+/* ---------------------------------------------------------------------------
+ * Buttons & search
+ * ------------------------------------------------------------------------ */
+
+.rp-button {
+  border-radius: 2px;
+  font-family: var(--wa-font-sans);
+  letter-spacing: 0.04em;
+}
+
+.rp-button.rp-button--brand {
+  color: var(--wa-kinari);
+  background: var(--wa-shu);
+  transition: background-color 0.2s ease;
+}
+
+.rp-button.rp-button--brand:hover {
+  background: var(--wa-shu-dark);
+  opacity: 1;
+}
+
+.rp-button.rp-button--alt,
+.dark .rp-button.rp-button--alt {
+  color: var(--wa-sumi);
+  background: transparent;
+  border: 1px solid var(--wa-sumi);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.rp-button.rp-button--alt:hover,
+.dark .rp-button.rp-button--alt:hover {
+  color: var(--wa-kinari);
+  background: var(--wa-sumi);
+  opacity: 1;
+}
+
+.rp-search-panel__mask {
+  background: rgb(27 25 22 / 45%);
+}
+
+.rp-search-panel__modal {
+  border: 1px solid var(--wa-line);
+}
+
+.rp-search-panel__input-form {
+  border-color: var(--wa-line);
+}
+
+.rp-search-panel__input-form:focus-within {
+  border-color: var(--wa-shu);
+}

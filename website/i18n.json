@@ -1,0 +1,86 @@
+{
+  "home.hero.side": {
+    "en": "Ask · Await · Resolve",
+    "ja": "問う・待つ・解く"
+  },
+  "home.features.kicker": {
+    "en": "Features",
+    "ja": "機能"
+  },
+  "home.features.lead": {
+    "en": "Three ideas — and what they look like in your app.",
+    "ja": "3 つの考え方と、実際のアプリでの見え方。"
+  },
+  "home.features.01.title": {
+    "en": "Promise-based",
+    "ja": "Promise ベース"
+  },
+  "home.features.01.body": {
+    "en": "`await toi(Component)` mounts your component and resolves with whatever it passes to `resolve` — an imperative call site instead of a pile of dispatched state.",
+    "ja": "`await toi(Component)` はコンポーネントをマウントし、`resolve` に渡した値でそのまま解決します。state を組み立てる代わりに、命令的な一行として書けます。"
+  },
+  "home.features.01.cta": {
+    "en": "Try it",
+    "ja": "試す"
+  },
+  "home.features.01.question": {
+    "en": "Delete this file?",
+    "ja": "このファイルを削除しますか?"
+  },
+  "home.features.01.ok": {
+    "en": "Delete",
+    "ja": "削除"
+  },
+  "home.features.01.cancel": {
+    "en": "Cancel",
+    "ja": "キャンセル"
+  },
+  "home.features.01.result": {
+    "en": "→ resolved with {{value}}",
+    "ja": "→ {{value}} で解決されました"
+  },
+  "home.features.02.title": {
+    "en": "Headless",
+    "ja": "ヘッドレス"
+  },
+  "home.features.02.body": {
+    "en": "toi only mounts your component and watches when it's done. No bundled styles to fight, no design system to adopt — markup, style, and motion stay entirely yours.",
+    "ja": "toi が担うのはマウントと完了の監視だけ。上書きすべき既定のスタイルも、従うべきデザインシステムもありません。マークアップ・スタイル・モーションは、すべてあなたのものです。"
+  },
+  "home.features.02.diagram.toi": {
+    "en": "toi",
+    "ja": "toi"
+  },
+  "home.features.02.diagram.toiCaption": {
+    "en": "mount · lifecycle · promise",
+    "ja": "マウント・ライフサイクル・Promise"
+  },
+  "home.features.02.diagram.you": {
+    "en": "you",
+    "ja": "あなた"
+  },
+  "home.features.02.diagram.youCaption": {
+    "en": "markup · style · motion",
+    "ja": "マークアップ・スタイル・モーション"
+  },
+  "home.features.03.title": {
+    "en": "Animation aware",
+    "ja": "アニメーションを意識した設計"
+  },
+  "home.features.03.body": {
+    "en": "Calling `resolve` doesn't unmount right away — toi waits for exit animations to finish first, so dialogs and toasts can animate out cleanly instead of vanishing mid-transition.",
+    "ja": "`resolve` を呼んでもすぐには消えません。終了アニメーションの完了を待ってから取り除くので、ダイアログやトーストは途中で消えることなく、きれいにアニメーションできます。"
+  },
+  "home.features.03.cta": {
+    "en": "Show toast",
+    "ja": "トーストを表示"
+  },
+  "home.features.03.message": {
+    "en": "Saved!",
+    "ja": "保存しました！"
+  },
+  "home.features.03.dismiss": {
+    "en": "Dismiss",
+    "ja": "閉じる"
+  }
+}

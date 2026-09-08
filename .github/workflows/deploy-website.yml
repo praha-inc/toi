@@ -1,0 +1,57 @@
+name: Deploy website
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-website:
+    name: Build website
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Setup
+        uses: ./.github/actions/setup
+
+      - name: Install fonts
+        run: |
+          mkdir -p ~/.local/share/fonts
+          base="https://raw.githubusercontent.com/google/fonts/main"
+          curl -fsSL -o ~/.local/share/fonts/ShipporiMincho-Regular.ttf "${base}/ofl/shipporimincho/ShipporiMincho-Regular.ttf"
+          curl -fsSL -o ~/.local/share/fonts/ShipporiMincho-Bold.ttf "${base}/ofl/shipporimincho/ShipporiMincho-Bold.ttf"
+          curl -fsSL -o ~/.local/share/fonts/NotoSansJP.ttf "${base}/ofl/notosansjp/NotoSansJP%5Bwght%5D.ttf"
+          fc-cache -f
+          for family in 'Shippori Mincho' 'Noto Sans JP'; do
+            fc-list | grep -qF "$family" || { echo "::error::font not installed: $family"; exit 1; }
+          done
+
+      - name: Build
+        working-directory: website
+        run: |
+          pnpm run -w build --filter @praha/toi-website
+          touch doc_build/.nojekyll
+
+      - name: Upload
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: website/doc_build
+
+  deploy-website:
+    name: Deploy website
+    runs-on: ubuntu-latest
+    needs: build-website
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: Website
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        name: Deploy
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0

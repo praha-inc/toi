@@ -1,0 +1,49 @@
+---
+title: What "toi" Means
+description: The Japanese word behind the name — 問い (toi), a question — how to say it, what the kanji 問 is made of, and how the logo grew out of it.
+---
+
+import { Mark } from '../../../../theme/components/Mark';
+
+# What "toi" Means
+
+<figure className="wa-figure" role="img" aria-label="The toi mark: the kanji 問 drawn as a gate in ink, with a vermillion seal set inside it">
+  <Mark className="wa-figure__mark" />
+</figure>
+
+**toi** is the Japanese word 問い — *a question*. It comes from the verb 問う (*tou*, "to ask"), and you'll meet the same character in everyday words like 質問 (*shitsumon*, a question), 問題 (*mondai*, a problem) and 訪問 (*houmon*, a visit — literally "calling on someone to ask after them").
+
+That's the whole idea of the library in one word. You don't *open* a dialog and *manage* its state; you **ask** a component something and **await** the answer:
+
+```tsx
+const confirmed = await toi(Confirm);
+```
+
+## How to say it
+
+*toi* has two short syllables, **to-i** — roughly "toh-ee", said quickly, which lands very close to the English word *toy*. It's written とい in hiragana; that reading sits above the wordmark on the home page the way a pronunciation guide (*furigana*) would in a Japanese book.
+
+## What the kanji is made of
+
+The character 問 is built from two parts:
+
+- **門** (*mon*) — a **gate**. Look at the shape: two doors, hinged on posts, side by side.
+- **口** (*kuchi*) — a **mouth**, set between them.
+
+Read as a picture, 問 is *a voice at the gate*: someone standing outside, calling in, and waiting for whoever is inside to answer. (Strictly, in the character's history 門 lends the sound and 口 the meaning — but the picture is the part that stuck, and it's a remarkably good description of what `toi` does.)
+
+Map it onto the API and each part has a job:
+
+| In the character | In toi |
+| --- | --- |
+| The one calling at the gate | Your code, calling `await toi(Component)` |
+| The gate | `ToiHost` — the one place components appear |
+| The voice inside answering | Your component, calling `resolve(value)` |
+
+## The logo
+
+The mark on this site is 問 taken apart and put back together. The gate is drawn as a constructed skeleton in ink, and the mouth has been replaced by a **vermillion seal**. In Japan a red seal (印, *in* — a *hanko*) is how you sign and approve things: a stamped document is a settled one. So the seal sitting inside the gate is the answer, already pressed and waiting — the promise that `toi` will eventually resolve.
+
+The rest of the site follows the same vocabulary: unbleached paper, ink, a single accent of vermillion, and the tagline 問いかけて、答えを待つ。 — *Ask, and await the answer.* — which the English home page renders as "Ask a component. Await the answer."
+
+Now that you know what you're saying, go ask something: the [Quick Start](./quick) gets your first component mounted in a few minutes.
