@@ -1,5 +1,11 @@
 # @praha/toi
 
+## 1.0.2
+
+### Patch Changes
+
+- [#30](https://github.com/praha-inc/toi/pull/30) [`16d9013`](https://github.com/praha-inc/toi/commit/16d9013a9b48236dabc71c5c2dfefc90ffd69c2f) Thanks [@Karibash](https://github.com/Karibash)! - Exclude type test files from the build
+
 ## 1.0.1
 
 ### Patch Changes
