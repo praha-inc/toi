@@ -36,7 +36,13 @@
 // around the seal in its place, settling quieter behind the features so it
 // never has to fight the copy for attention. The plain SVG is the
 // reduced-motion / no-WebGL fallback, hidden the moment a canvas is mounted
-// into `.home-mark-canvas`.
+// into `.home-mark-canvas`. It is drawn as solid strokes where the WebGL mark
+// is line art, so it must never be seen *before* the canvas: the static HTML
+// is on screen for a good while before hydration mounts the canvas, and
+// showing the fallback straight away had the mark flash solid and then turn
+// hollow. So, unless motion is reduced (no canvas is ever coming, and the
+// fallback is the mark), it stays invisible for long enough for WebGL to take
+// over and only then fades in — for no-JS / no-WebGL visitors.
 .home-mark-wrap {
   position: fixed;
   inset: 0;
@@ -82,6 +88,10 @@
   height: 100%;
   color: var(--wa-sumi);
   opacity: 0.16;
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation: home-mark-fallback-in 0.8s ease-out 1.2s both;
+  }
 }
 
 @media (max-width: 780px) {
@@ -1025,6 +1035,13 @@
   .home-rail__cue-line {
     opacity: 0;
     animation: home-scroll-cue-in 0.6s ease-out 1.1s forwards, home-scroll-cue-breathe 2.4s ease-in-out 1.7s infinite;
+  }
+}
+
+// Only a `from`: the fallback fades up to its own opacity.
+@keyframes home-mark-fallback-in {
+  from {
+    opacity: 0;
   }
 }
 
