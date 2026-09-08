@@ -57,7 +57,7 @@
     "@praha/oxlint-config-react": "1.0.2",
     "@praha/oxlint-config-standard": "1.0.2",
     "@rsbuild/plugin-react": "2.1.0",
-    "@rslib/core": "0.23.2",
+    "@rslib/core": "1.0.0",
     "@testing-library/react": "16.3.3",
     "@tsconfig/strictest": "2.0.8",
     "@types/react": "19.2.18",
