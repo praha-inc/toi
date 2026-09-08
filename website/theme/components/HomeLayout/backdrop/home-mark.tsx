@@ -443,7 +443,11 @@ export const HomeMark: FC = () => {
 
       let spin = 0;
       let tilt = 0;
-      let fade = 1;
+      // Starts from nothing and eases up to `targetFade`, so the mark fades
+      // in over the first second rather than popping in whole on the first
+      // frame (the SVG fallback is timed to stay out of the way meanwhile —
+      // see `.home-mark-fallback`).
+      let fade = 0;
       let yaw = 0;
       let pitch = 0;
       let raf = 0;
