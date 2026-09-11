@@ -68,7 +68,37 @@ const Toast: FC<ToiProps> = ({ ref, resolve }) => (
 await toi(Toast);
 ```
 
-Once `resolve` is called, the component stays mounted until any running animations (excluding infinite ones) on the element attached to `ref` finish, so exit animations can play out before it's removed from the `ToiHost` and the promise resolves.
+Components also receive a `reject` prop. Calling it rejects the promise instead, so `await toi(Confirm)` throws. It's meant for when the component can no longer answer — work it performs before resolving fails, or the user navigates away — not for ordinary dismissals like a "Cancel" button, which should `resolve` with a value.
+
+```tsx
+const Confirm: FC<ToiProps<boolean>> = ({ ref, resolve, reject }) => (
+  <dialog ref={ref} open>
+    <button onClick={() => resolve(false)}>Cancel</button>
+    <button
+      onClick={async () => {
+        try {
+          await deleteItem();
+          resolve(true);
+        } catch (error) {
+          reject(error);
+        }
+      }}
+    >
+      Delete
+    </button>
+  </dialog>
+);
+
+try {
+  const deleted = await toi(Confirm);
+} catch (error) {
+  // deleteItem() failed
+}
+```
+
+Called without a reason, `reject` rejects with a `DOMException` named `AbortError`, following the `AbortSignal` convention.
+
+Once `resolve` or `reject` is called, the component stays mounted until any running animations (excluding infinite ones) on the element attached to `ref` finish, so exit animations can play out before it's removed from the `ToiHost` and the promise settles.
 
 Use `toi.fn` to bind a component to `toi` once and reuse the resulting function.
 
@@ -77,7 +107,7 @@ const confirm = toi.fn(Confirm);
 const confirmed = await confirm();
 ```
 
-Pass a second argument to `toi` for components that need additional props beyond `resolve` and `ref`.
+Pass a second argument to `toi` for components that need additional props beyond `ref`, `resolve`, and `reject`.
 
 ```tsx
 type ConfirmProps = ToiProps<boolean> & { message: string };

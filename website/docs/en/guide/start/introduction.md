@@ -19,7 +19,7 @@ toi has three moving parts:
 
 - **`toi`** — mounts a component and returns a promise. Call it from anywhere, including inside an event handler.
 - **`ToiHost`** — renders every component currently mounted by `toi`. It needs to exist somewhere in your tree, once.
-- **`ToiProps`** — the `ref` and `resolve` props toi injects into the component you pass it. Calling `resolve` is what settles the promise `toi` returned.
+- **`ToiProps`** — the `ref`, `resolve`, and `reject` props toi injects into the component you pass it. Calling `resolve` (or `reject`) is what settles the promise `toi` returned.
 
 Try it below — click "Delete", then "OK" or "Cancel", and watch the result appear:
 
