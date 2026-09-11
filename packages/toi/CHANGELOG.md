@@ -1,5 +1,11 @@
 # @praha/toi
 
+## 1.1.0
+
+### Minor Changes
+
+- [#37](https://github.com/praha-inc/toi/pull/37) [`2d74251`](https://github.com/praha-inc/toi/commit/2d742510b204d78ee47d31c6ae6eb350e51ecc08) Thanks [@Karibash](https://github.com/Karibash)! - Add a `reject` prop to `ToiProps` that rejects the promise returned by `toi`
+
 ## 1.0.2
 
 ### Patch Changes
