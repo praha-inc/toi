@@ -66,8 +66,60 @@ describe('toi', () => {
     });
   });
 
+  describe('when reject is called', () => {
+    const Component: FC<ToiProps<boolean>> = ({ ref, resolve, reject }) => (
+      <div ref={ref}>
+        <button type="button" onClick={() => resolve(true)}>OK</button>
+        <button type="button" onClick={() => reject(new Error('cancelled'))}>Cancel</button>
+        <button type="button" onClick={() => reject()}>Dismiss</button>
+      </div>
+    );
+
+    it('should reject the promise with the reason passed to reject and unmount the component', async () => {
+      const [promise] = await act(() => [toi(Component)]);
+
+      await act(async () => {
+        fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+        await expect(promise).rejects.toThrow('cancelled');
+      });
+
+      expect(screen.queryByRole('button', { name: 'Cancel' })).toBeNull();
+    });
+
+    it('should reject with an AbortError when called without a reason', async () => {
+      const [promise] = await act(() => [toi(Component)]);
+
+      await act(async () => {
+        fireEvent.click(screen.getByRole('button', { name: 'Dismiss' }));
+        await expect(promise).rejects.toSatisfy((error) => error instanceof DOMException && error.name === 'AbortError');
+      });
+    });
+
+    it('should ignore resolve after reject', async () => {
+      const [promise] = await act(() => [toi(Component)]);
+
+      await act(async () => {
+        fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+        fireEvent.click(screen.getByRole('button', { name: 'OK' }));
+        await expect(promise).rejects.toThrow('cancelled');
+      });
+    });
+
+    it('should ignore reject after resolve', async () => {
+      const [promise] = await act(() => [toi(Component)]);
+
+      const response = await act(async () => {
+        fireEvent.click(screen.getByRole('button', { name: 'OK' }));
+        fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+        return promise;
+      });
+
+      expect(response).toBe(true);
+    });
+  });
+
   describe('when the ref element has a finite exit animation', () => {
-    const Component: FC<ToiProps<string>> = ({ ref, resolve }) => (
+    const Component: FC<ToiProps<string>> = ({ ref, resolve, reject }) => (
       <div
         data-testid="dialog"
         ref={(element) => {
@@ -76,10 +128,11 @@ describe('toi', () => {
         }}
       >
         <button type="button" onClick={() => resolve('done')}>close</button>
+        <button type="button" onClick={() => reject(new Error('cancelled'))}>cancel</button>
       </div>
     );
 
-    it('should wait for the animation to finish before removing the component', async () => {
+    it('should wait for the animation to finish before removing the component when resolved', async () => {
       const [promise] = await act(() => [toi(Component)]);
 
       const response = await act(async () => {
@@ -89,6 +142,18 @@ describe('toi', () => {
       });
 
       expect(response).toBe('done');
+      expect(screen.queryByTestId('dialog')).toBeNull();
+    });
+
+    it('should wait for the animation to finish before removing the component when rejected', async () => {
+      const [promise] = await act(() => [toi(Component)]);
+
+      await act(async () => {
+        fireEvent.click(screen.getByRole('button', { name: 'cancel' }));
+        expect(screen.queryByTestId('dialog')).not.toBeNull();
+        await expect(promise).rejects.toThrow('cancelled');
+      });
+
       expect(screen.queryByTestId('dialog')).toBeNull();
     });
   });

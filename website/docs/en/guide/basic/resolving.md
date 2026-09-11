@@ -1,6 +1,6 @@
 ---
 title: Resolving
-description: Resolving with or without a value, calling resolve multiple times, and how exit animations delay unmounting.
+description: Resolving with or without a value, rejecting instead, calling resolve or reject multiple times, and how exit animations delay unmounting.
 ---
 
 # Resolving
@@ -45,13 +45,55 @@ export default function App() {
 }
 ```
 
-## Calling resolve more than once
+## Rejecting
 
-Calling `resolve` a second time has no effect — the first call wins, and the promise has already started settling. This makes it safe to wire `resolve` up to more than one event without guarding against double-firing yourself, for example both a button click and a backdrop click on a dialog.
+Alongside `resolve`, every component also receives a `reject` prop, typed as `ToiReject`. Calling it settles the promise `toi` returned by rejecting it, so the `await` throws instead of returning a value.
+
+`reject` is for when the component can no longer answer — not for ordinary outcomes like the user closing a dialog. There are two typical cases:
+
+- **Work done before resolving fails.** A dialog that performs an action before resolving — submitting a form, deleting an item — has nothing to answer with if that action throws. Pass the error to `reject` so it reaches the caller.
+- **The request is abandoned.** The user navigates to another page, or the component is otherwise torn down before it was answered. Call `reject()` with no argument.
+
+```tsx
+const Confirm: FC<ToiProps<boolean>> = ({ ref, resolve, reject }) => (
+  <dialog ref={ref} open>
+    <button onClick={() => resolve(false)}>Cancel</button>
+    <button
+      onClick={async () => {
+        try {
+          await deleteItem();
+          resolve(true);
+        } catch (error) {
+          reject(error);
+        }
+      }}
+    >
+      Delete
+    </button>
+  </dialog>
+);
+
+try {
+  const deleted = await toi(Confirm);
+  // Delete succeeded (true) or Cancel was clicked (false)
+} catch (error) {
+  // deleteItem() failed
+}
+```
+
+`reject` accepts any reason, just like `Promise.reject`. When called without one, the promise is rejected with a `DOMException` named `AbortError` — the same convention `AbortSignal` uses — so callers can tell an abandoned request apart from a genuine failure with `error.name === 'AbortError'`.
+
+For a dismissal the caller expects and handles — a confirm dialog's "Cancel" button, a toast being closed — `resolve` with a value (or with nothing) instead, as `Confirm` above does. That keeps the happy path free of `try`/`catch` and reserves rejection for things that actually went wrong.
+
+Note that an unhandled rejection surfaces as an error in the console, so make sure code awaiting a component that may reject catches it.
+
+## Calling resolve or reject more than once
+
+Calling `resolve` or `reject` a second time has no effect — the first call of either wins, and the promise has already started settling. This makes it safe to wire them up to more than one event without guarding against double-firing yourself, for example both a button click and a backdrop click on a dialog.
 
 ## Exit animations
 
-Resolving doesn't unmount the component right away. toi looks at the element attached to `ref` (which must implement the [`Animatable`](https://developer.mozilla.org/en-US/docs/Web/API/Element/getAnimations) interface) and waits for every animation running on it or its descendants — except infinitely repeating ones — to finish, before removing the component from `ToiHost` and settling the promise.
+Resolving (or rejecting) doesn't unmount the component right away. toi looks at the element attached to `ref` (which must implement the [`Animatable`](https://developer.mozilla.org/en-US/docs/Web/API/Element/getAnimations) interface) and waits for every animation running on it or its descendants — except infinitely repeating ones — to finish, before removing the component from `ToiHost` and settling the promise.
 
 This means a CSS or Web Animations exit transition started alongside `resolve` gets a chance to play out fully. Click "Dismiss" below and watch the fade-out finish before the toast disappears:
 

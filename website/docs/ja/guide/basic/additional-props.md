@@ -1,11 +1,11 @@
 ---
 title: 追加の Props
-description: ref と resolve 以外の Props をコンポーネントに渡す方法と、それらが必須かオプションかがどのように推論されるか。
+description: ref、resolve、reject 以外の Props をコンポーネントに渡す方法と、それらが必須かオプションかがどのように推論されるか。
 ---
 
 # 追加の Props
 
-`ToiProps<Response>` が持っているプロパティは `ref` と `resolve` だけです。しかし実際のコンポーネントでは、表示するメッセージや削除対象のアイテムなど、それ以外の Props が必要になることがほとんどです。これらはコンポーネント自身の Props の一部として定義し、`toi` の第 2 引数を経由して渡します。
+`ToiProps<Response>` が持っているプロパティは `ref`、`resolve`、`reject` だけです。しかし実際のコンポーネントでは、表示するメッセージや削除対象のアイテムなど、それ以外の Props が必要になることがほとんどです。これらはコンポーネント自身の Props の一部として定義し、`toi` の第 2 引数を経由して渡します。
 
 ```tsx preview="iframe-follow"
 import { toi, ToiHost } from '@praha/toi';

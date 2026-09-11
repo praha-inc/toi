@@ -1,11 +1,11 @@
 ---
 title: Additional Props
-description: Passing a component props beyond ref and resolve, and how the required-versus-optional shape of those props is inferred.
+description: Passing a component props beyond ref, resolve, and reject, and how the required-versus-optional shape of those props is inferred.
 ---
 
 # Additional Props
 
-`ToiProps<Response>` only describes `ref` and `resolve`. A component almost always needs more than that — a message to display, an item to confirm deletion of, and so on. Define those as part of the component's own props, then pass them as a second argument to `toi`:
+`ToiProps<Response>` only describes `ref`, `resolve`, and `reject`. A component almost always needs more than that — a message to display, an item to confirm deletion of, and so on. Define those as part of the component's own props, then pass them as a second argument to `toi`:
 
 ```tsx preview="iframe-follow"
 import { toi, ToiHost } from '@praha/toi';

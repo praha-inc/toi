@@ -56,6 +56,23 @@ describe('toi', () => {
       const result = toi(Test, { additionalProp: 'test' });
       expectTypeOf(result).resolves.toEqualTypeOf<boolean>();
     });
+
+    test('should not error when the component declares a compatible reject prop', () => {
+      type TestProps = { resolve: (response: boolean) => void; reject: (reason?: unknown) => void };
+      const Test: FC<TestProps> = () => null;
+
+      const result = toi(Test);
+      expectTypeOf(result).resolves.toEqualTypeOf<boolean>();
+    });
+
+    // oxlint-disable-next-line vitest/expect-expect -- assertion is the `@ts-expect-error` below
+    test('should error when the component declares an incompatible reject prop', () => {
+      type TestProps = { resolve: (response: boolean) => void; reject: (reason: Error) => void };
+      const Test: FC<TestProps> = () => null;
+
+      // @ts-expect-error -- TestProps' `reject` only accepts `Error`, but toi may reject with any reason
+      void toi(Test);
+    });
   });
 
   describe('when calling toi with a component whose resolve takes no argument', () => {
