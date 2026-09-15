@@ -52,7 +52,7 @@ Alongside `resolve`, every component also receives a `reject` prop, typed as `To
 `reject` is for when the component can no longer answer — not for ordinary outcomes like the user closing a dialog. There are two typical cases:
 
 - **Work done before resolving fails.** A dialog that performs an action before resolving — submitting a form, deleting an item — has nothing to answer with if that action throws. Pass the error to `reject` so it reaches the caller.
-- **The request is abandoned.** The user navigates to another page, or the component is otherwise torn down before it was answered. Call `reject()` with no argument.
+- **The request is abandoned.** The user navigates to another page, or the component is otherwise torn down before it was answered. Call `reject()` with no argument. Note that page transitions don't do this for you; see [Closing on Navigation](./navigation).
 
 ```tsx
 const Confirm: FC<ToiProps<boolean>> = ({ ref, resolve, reject }) => (

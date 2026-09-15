@@ -1,6 +1,7 @@
 [
   { "type": "file", "name": "mounting", "label": "Mounting the Host" },
   { "type": "file", "name": "resolving", "label": "Resolving" },
+  { "type": "file", "name": "navigation", "label": "Closing on Navigation" },
   { "type": "file", "name": "reusable-functions", "label": "Reusable Functions" },
   { "type": "file", "name": "additional-props", "label": "Additional Props" }
 ]

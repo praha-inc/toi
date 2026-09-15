@@ -24,6 +24,13 @@ export type ToiResolve<Response> = [Response] extends [void] ? () => void : (res
  * before resolving fails, or the user navigates away. Ordinary dismissals,
  * such as a cancel button, should `resolve` instead.
  *
+ * Note that navigating to another page doesn't call `reject` on its own:
+ * components rendered by {@link toi} live in the {@link ToiHost}, which usually
+ * sits outside the routed part of the tree, so they stay mounted across page
+ * transitions. To close a component on navigation, listen for the
+ * {@link https://developer.mozilla.org/docs/Web/API/Navigation/currententrychange_event | `currententrychange`}
+ * event on `navigation` and call `reject()` from it.
+ *
  * When `reason` is omitted, the promise is rejected with a `DOMException` named
  * `AbortError`, following the {@link AbortSignal} convention.
  */
@@ -87,6 +94,26 @@ export type InferToiResponse<T> = T extends FC<infer Props>
  * ```
  *
  * @example
+ * Rejecting when the user navigates away, since components in the
+ * {@link ToiHost} aren't unmounted by page transitions on their own:
+ * ```tsx
+ * const Confirm: FC<ToiProps<boolean>> = ({ ref, resolve, reject }) => {
+ *   useEffect(() => {
+ *     const abandon = () => reject();
+ *     navigation.addEventListener('currententrychange', abandon);
+ *     return () => navigation.removeEventListener('currententrychange', abandon);
+ *   }, [reject]);
+ *
+ *   return (
+ *     <dialog ref={ref} open>
+ *       <button onClick={() => resolve(true)}>OK</button>
+ *       <button onClick={() => resolve(false)}>Cancel</button>
+ *     </dialog>
+ *   );
+ * };
+ * ```
+ *
+ * @example
  * Extending a native element's props, resolving with a value:
  * ```tsx
  * type ConfirmProps = ComponentProps<'dialog'> & ToiProps<boolean>;
@@ -117,6 +144,11 @@ export type ToiProps<Response = void> = {
    * Use it when the component can no longer answer, such as when work done
    * before resolving fails or the user navigates away. Ordinary dismissals,
    * such as a cancel button, should `resolve` instead.
+   *
+   * Page transitions don't call it automatically, since the {@link ToiHost}
+   * usually sits outside the routed part of the tree. To close the component
+   * on navigation, listen for the `currententrychange` event on `navigation`
+   * and call `reject()` from it. See {@link ToiReject}.
    *
    * Has no effect once either `resolve` or `reject` has been called.
    */
