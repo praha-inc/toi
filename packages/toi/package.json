@@ -1,6 +1,6 @@
 {
   "name": "@praha/toi",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "A tiny headless React utility for building imperative dialogs/toasts",
   "keywords": [
     "javascript",
