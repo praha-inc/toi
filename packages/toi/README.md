@@ -98,6 +98,27 @@ try {
 
 Called without a reason, `reject` rejects with a `DOMException` named `AbortError`, following the `AbortSignal` convention.
 
+Note that navigating to another page doesn't reject the promise on its own. Components rendered by `toi` live in the `ToiHost`, which usually sits outside the routed part of your tree, so they stay mounted across page transitions. To close a component when the user navigates away, listen for the Navigation API's [`currententrychange`](https://developer.mozilla.org/docs/Web/API/Navigation/currententrychange_event) event and call `reject()` from it.
+
+```tsx
+import { useEffect } from 'react';
+
+const Confirm: FC<ToiProps<boolean>> = ({ ref, resolve, reject }) => {
+  useEffect(() => {
+    const abandon = () => reject();
+    navigation.addEventListener('currententrychange', abandon);
+    return () => navigation.removeEventListener('currententrychange', abandon);
+  }, [reject]);
+
+  return (
+    <dialog ref={ref} open>
+      <button onClick={() => resolve(true)}>OK</button>
+      <button onClick={() => resolve(false)}>Cancel</button>
+    </dialog>
+  );
+};
+```
+
 Once `resolve` or `reject` is called, the component stays mounted until any running animations (excluding infinite ones) on the element attached to `ref` finish, so exit animations can play out before it's removed from the `ToiHost` and the promise settles.
 
 Use `toi.fn` to bind a component to `toi` once and reuse the resulting function.

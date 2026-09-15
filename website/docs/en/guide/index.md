@@ -17,5 +17,6 @@ toi is a tiny headless React utility for building imperative dialogs and toasts.
 
 - [Mounting the Host](./basic/mounting) — where `toi`-mounted components actually render.
 - [Resolving](./basic/resolving) — resolving with or without a value, and how exit animations are handled.
+- [Closing on Navigation](./basic/navigation) — why components stay open across page transitions, and how to close them on navigation.
 - [Reusable Functions](./basic/reusable-functions) — binding a component to `toi` once with `toi.fn`.
 - [Additional Props](./basic/additional-props) — passing props beyond `ref` and `resolve`.

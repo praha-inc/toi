@@ -17,5 +17,6 @@ toi は、命令的なダイアログやトーストを構築するための小�
 
 - [ホストのマウント](./basic/mounting) — `toi` でマウントしたコンポーネントが実際にレンダリングされる場所。
 - [解決する](./basic/resolving) — 値の有無による解決の違いと、終了アニメーションの扱い方。
+- [ページ遷移で閉じる](./basic/navigation) — コンポーネントがページ遷移をまたいで開いたままになる理由と、遷移時に閉じる方法。
 - [再利用可能な関数](./basic/reusable-functions) — `toi.fn` でコンポーネントを一度だけ `toi` に紐づける。
 - [追加の Props](./basic/additional-props) — `ref` と `resolve` 以外の Props を渡す方法。
