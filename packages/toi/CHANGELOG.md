@@ -1,5 +1,15 @@
 # @praha/toi
 
+## 1.1.0
+
+### Minor Changes
+
+- [#37](https://github.com/praha-inc/toi/pull/37) [`2d74251`](https://github.com/praha-inc/toi/commit/2d742510b204d78ee47d31c6ae6eb350e51ecc08) Thanks [@Karibash](https://github.com/Karibash)! - Add a `reject` prop to `ToiProps` that rejects the promise returned by `toi`
+
+### Patch Changes
+
+- [#43](https://github.com/praha-inc/toi/pull/43) [`fb93233`](https://github.com/praha-inc/toi/commit/fb932331f3658856ba65c71233b4d9f72596d2b9) Thanks [@Karibash](https://github.com/Karibash)! - Document closing components on page navigation via the currententrychange event
+
 ## 1.0.2
 
 ### Patch Changes
