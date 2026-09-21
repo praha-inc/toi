@@ -273,8 +273,8 @@ importers:
         specifier: 2.0.1
         version: 2.0.1(@rsbuild/core@2.2.8)
       '@rspress/plugin-preview':
-        specifier: 2.0.21
-        version: 2.0.21(@rspack/core@2.2.6(@swc/helpers@0.5.23))(@rspress/core@2.0.22(@rspack/core@2.2.6(@swc/helpers@0.5.23))(micromark-util-types@2.0.2)(micromark@4.0.2(supports-color@8.1.1))(supports-color@8.1.1))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        specifier: 2.0.22
+        version: 2.0.22(@rspack/core@2.2.6(@swc/helpers@0.5.23))(@rspress/core@2.0.22(@rspack/core@2.2.6(@swc/helpers@0.5.23))(micromark-util-types@2.0.2)(micromark@4.0.2(supports-color@8.1.1))(supports-color@8.1.1))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@rspress/plugin-sitemap':
         specifier: 2.0.21
         version: 2.0.21(@rspress/core@2.0.22(@rspack/core@2.2.6(@swc/helpers@0.5.23))(micromark-util-types@2.0.2)(micromark@4.0.2(supports-color@8.1.1))(supports-color@8.1.1))
@@ -1668,8 +1668,8 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
-  '@rspress/plugin-preview@2.0.21':
-    resolution: {integrity: sha512-nvn5uIQqyrT2kv30EcJE/6UPhyKfxHuJIAjhjoapzGI0gxRRkcSsvDQMow6JHkmf3pulywAmYH13uhkFBl13mA==}
+  '@rspress/plugin-preview@2.0.22':
+    resolution: {integrity: sha512-KR6fF3KJcE5d14XMPcbdCtSB732rjxn3FnNjjkrDgv0D3PPeAh5NDiP9qbSo1o/KTXmyPFf8kocW0VovmLl9Hg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       '@rspress/core': ^2.0.10
@@ -5072,7 +5072,7 @@ snapshots:
       - micromark-util-types
       - supports-color
 
-  '@rspress/plugin-preview@2.0.21(@rspack/core@2.2.6(@swc/helpers@0.5.23))(@rspress/core@2.0.22(@rspack/core@2.2.6(@swc/helpers@0.5.23))(micromark-util-types@2.0.2)(micromark@4.0.2(supports-color@8.1.1))(supports-color@8.1.1))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
+  '@rspress/plugin-preview@2.0.22(@rspack/core@2.2.6(@swc/helpers@0.5.23))(@rspress/core@2.0.22(@rspack/core@2.2.6(@swc/helpers@0.5.23))(micromark-util-types@2.0.2)(micromark@4.0.2(supports-color@8.1.1))(supports-color@8.1.1))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
     dependencies:
       '@rsbuild/core': 2.2.8
       '@rsbuild/plugin-react': 2.1.0(@rsbuild/core@2.2.8)(@rspack/core@2.2.6(@swc/helpers@0.5.23))

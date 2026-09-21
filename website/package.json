@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@rsbuild/plugin-sass": "2.0.1",
-    "@rspress/plugin-preview": "2.0.21",
+    "@rspress/plugin-preview": "2.0.22",
     "@rspress/plugin-sitemap": "2.0.21",
     "@types/node": "24.13.4",
     "@types/react": "19.3.0",
