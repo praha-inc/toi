@@ -21,7 +21,7 @@
     "oxlint": "1.85.0",
     "oxlint-tsgolint": "7.0.2003",
     "pkg-pr-new": "0.0.88",
-    "turbo": "2.11.4",
+    "turbo": "2.11.5",
     "typescript": "7.0.2"
   },
   "packageManager": "pnpm@12.4.1"
