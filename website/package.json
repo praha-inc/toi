@@ -22,7 +22,7 @@
     "@rsbuild/plugin-sass": "2.0.1",
     "@rspress/plugin-preview": "2.0.23",
     "@rspress/plugin-sitemap": "2.0.23",
-    "@types/node": "24.19.0",
+    "@types/node": "24.19.1",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "oxlint": "1.86.0",
