@@ -57,7 +57,7 @@
     "@types/react-dom": "19.3.0",
     "@vitejs/plugin-react": "6.1.2",
     "@vitest/browser-playwright": "5.0.5",
-    "oxlint": "1.88.0",
+    "oxlint": "1.89.0",
     "oxlint-tsgolint": "7.0.2004",
     "react": "19.3.1",
     "react-dom": "19.3.1",
