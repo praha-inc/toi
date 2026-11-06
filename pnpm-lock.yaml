@@ -273,8 +273,8 @@ importers:
         specifier: 2.0.1
         version: 2.0.1(@rsbuild/core@2.3.0)
       '@rspress/plugin-preview':
-        specifier: 2.0.23
-        version: 2.0.23(@rspack/core@2.3.0(@swc/helpers@0.5.23))(@rspress/core@2.1.0(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        specifier: 2.1.0
+        version: 2.1.0(@rspack/core@2.3.0(@swc/helpers@0.5.23))(@rspress/core@2.1.0(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@rspress/plugin-sitemap':
         specifier: 2.0.23
         version: 2.0.23(@rspress/core@2.1.0(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))
@@ -1668,11 +1668,11 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
-  '@rspress/plugin-preview@2.0.23':
-    resolution: {integrity: sha512-GlMrF8s0UIzS27DNRv21Isx7pnkfH7L3atsadatXuZhlWdMV4WGOLpzWNNElyJ6kRbouUcBzSWlyvrUrXAel7Q==}
+  '@rspress/plugin-preview@2.1.0':
+    resolution: {integrity: sha512-X/2exdpnieY8n5p1c0+MmXDxJKOYJcGeC8wSo8S1JGtNGOgZxJDgEyOCIcX/udpM4LphJW6F+W/bgzxq5ZE++Q==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
-      '@rspress/core': ^2.0.10
+      '@rspress/core': ^2.1.0-beta.2
       react: '>=18.0.0'
       react-dom: '>=18.0.0'
 
@@ -5071,7 +5071,7 @@ snapshots:
       - micromark-util-types
       - supports-color
 
-  '@rspress/plugin-preview@2.0.23(@rspack/core@2.3.0(@swc/helpers@0.5.23))(@rspress/core@2.1.0(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@rspress/plugin-preview@2.1.0(@rspack/core@2.3.0(@swc/helpers@0.5.23))(@rspress/core@2.1.0(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
       '@rsbuild/core': 2.3.0
       '@rsbuild/plugin-react': 2.1.1(@rsbuild/core@2.3.0)(@rspack/core@2.3.0(@swc/helpers@0.5.23))
