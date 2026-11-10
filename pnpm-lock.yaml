@@ -276,8 +276,8 @@ importers:
         specifier: 2.1.0
         version: 2.1.0(@rspack/core@2.3.0(@swc/helpers@0.5.23))(@rspress/core@2.1.0(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@rspress/plugin-sitemap':
-        specifier: 2.0.23
-        version: 2.0.23(@rspress/core@2.1.0(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))
+        specifier: 2.1.1
+        version: 2.1.1(@rspress/core@2.1.0(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))
       '@types/node':
         specifier: 24.19.2
         version: 24.19.2
@@ -1676,11 +1676,11 @@ packages:
       react: '>=18.0.0'
       react-dom: '>=18.0.0'
 
-  '@rspress/plugin-sitemap@2.0.23':
-    resolution: {integrity: sha512-r37TvCP2wuQX8JbA7hHti8JXhVx4HiaJPn702NgFhGyolGJYIUTRQCO2/ixiP1FZJuxZ4c0yb4ZyNeDa9ZPMlw==}
+  '@rspress/plugin-sitemap@2.1.1':
+    resolution: {integrity: sha512-3Zk+dmitcx5QxiSPi1Wh4exexRnKa09Yyj3710x6UM4sW2cl72SctMZapO7X9ETNrgVt9fW52eQsFzW1y38gSg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
-      '@rspress/core': ^2.0.10
+      '@rspress/core': ^2.1.0-beta.2
 
   '@rspress/shared@2.1.0':
     resolution: {integrity: sha512-D2wnLO4aV1eFxNbUqQaLY4QfZZktegM+lCIDbQ9H2wxNQHKde39U1hpRdZKIA4aCuPYf/RSb6EdmJiZOkoZaWw==}
@@ -5085,7 +5085,7 @@ snapshots:
       - '@rspack/core'
       - core-js
 
-  '@rspress/plugin-sitemap@2.0.23(@rspress/core@2.1.0(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))':
+  '@rspress/plugin-sitemap@2.1.1(@rspress/core@2.1.0(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))':
     dependencies:
       '@rspress/core': 2.1.0(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1)
 
